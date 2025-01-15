@@ -43,7 +43,7 @@ export const CategoryAdd = ({ addFoodCategory, setInputValue, inputValue }) => {
           </DialogDescription>
           <div className="grid grid-cols-4 items-center gap-4">
            
-            <Input onChange={onChangeHandler} className="col-span-3" />
+            <Input placeholder="Type category name..." onChange={onChangeHandler} className="col-span-3" />
           </div>
       
         </div>
