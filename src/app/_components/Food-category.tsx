@@ -15,6 +15,7 @@ export const FoodCategory = () => {
     []
   );
   const [inputValue, setInputValue] = useState();
+  
 
   const addFoodCategory = async () => {
     const response = await fetch(`http://localhost:8000/food-category`, {
@@ -23,8 +24,8 @@ export const FoodCategory = () => {
       body: JSON.stringify({ name: inputValue }),
     });
     const data = await response.json();
-    if (data.newItem.categoryName)
       setFoodCategories([...foodCategories, data.newItem]);
+      
   };
 
   useEffect(() => {
@@ -38,7 +39,7 @@ export const FoodCategory = () => {
 
   return (
     <div className="bg-[#FFFFFF] w-full h-100% rounded-xl p-4 ">
-      <div className="py-1">Dishes category</div>
+      <div className="py-3 text-[#09090B] font-[600]">Dishes category</div>
       <div className="flex flex-wrap gap-2">
         {foodCategories.map((items: any) => (
           <Badge
