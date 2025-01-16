@@ -1,12 +1,13 @@
 import Image from "next/image";
 import { FoodCategory } from "../../_components/Food-category";
-import { Food } from "@/app/_components/Food";
+import FoodPage from "./[id]/page";
+
 
 export default function Home() {
   return (
     <div className="relative">
-      <FoodCategory />
-      <Food />
+     
+      <FoodPage/>
     </div>
   );
 }

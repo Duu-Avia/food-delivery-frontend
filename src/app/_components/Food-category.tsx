@@ -7,7 +7,6 @@ import { CategoryAdd } from "./Category-add";
 import { Badge } from "@/components/ui/badge";
 import { useSearchParams } from "next/navigation";
 import Link from "next/link";
-import { Food } from "./Food";
 type foodCategoriesType = {
   _id: number;
   name: string;
@@ -18,9 +17,7 @@ export const FoodCategory = () => {
     []
   );
   const [inputValue, setInputValue] = useState();
-  const searchParams = useSearchParams();
-  const id = searchParams.get("id");
-  const [foodCategoryId, setFoodCategoryId] = useState("");
+ 
 
   const addFoodCategory = async () => {
     const response = await fetch(`http://localhost:8000/admin/food_menu`, {
@@ -40,22 +37,23 @@ export const FoodCategory = () => {
     };
     fetchData();
   }, []);
-  console.log(foodCategoryId);
+
   return (
-    <div className="bg-[#FFFFFF] w-full h-100% rounded-xl p-4 ">
-      <div className="py-3 text-[#09090B] font-[600]">Dishes category</div>
+    <div className="bg-[#FFFFFF] w-full h-100% rounded-xl p-4 mt-[80px] mb-[50px]">
+      <div className="py-3 text-[#09090B] text-[20px] font-[600]">Dishes category</div>
       <div className="flex flex-wrap gap-2">
         {foodCategories.map((items: any) => (
+          <Link key={`link-${items._id}`} href={`/admin/food_menu/${items?._id}`}>
           <Badge
-            onClick={() => setFoodCategoryId(items?._id)}
             key={`category-${items?._id}`}
-            className="rounded-full "
+            className="rounded-full py-2 px-3 "
             variant="outline"
           >
             <p className="text-[#18181B] text-[14px] font-[500] ">
               {items?.categoryName}
             </p>
           </Badge>
+          </Link>
         ))}
 
         <CategoryAdd

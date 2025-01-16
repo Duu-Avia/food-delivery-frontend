@@ -12,11 +12,11 @@ import {
 import { Input } from "@/components/ui/input";
 import { Plus } from "lucide-react";
 import { useState } from "react";
-export const CategoryAdd = ({ addFoodCategory, setInputValue, inputValue }) => {
+export const CategoryAdd = ({ addFoodCategory, setInputValue, inputValue }:any) => {
   const [isDisabled, setIsDisabled] = useState(true);
 
-  console.log(isDisabled);
-  const onChangeHandler = (e) => {
+
+  const onChangeHandler = (e:any) => {
     const value = e.target.value;
     setInputValue(e.target.value);
     setIsDisabled(!value);
