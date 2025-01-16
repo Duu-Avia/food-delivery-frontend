@@ -8,7 +8,7 @@ export const LeftSideBar = () => {
   return (
     <>
       <div className="flex gap-[5px] justify-center py-[40px]">
-        <img className="w-[40px] h-[40px]" src="Logo.png"></img>
+        <img className="w-[40px] h-[40px]" src="./Logo.png"></img>
         <div>
           <div className="text-[#09090B] text-[1.125rem] font-[600]">
             NomNom

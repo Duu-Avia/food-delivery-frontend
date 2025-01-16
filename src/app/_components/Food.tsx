@@ -7,13 +7,13 @@ import { CategoryAdd } from "./Category-add";
 import { Badge } from "@/components/ui/badge";
 import { useSearchParams } from "next/navigation";
 import Link from "next/link";
-import { Food } from "./Food";
+
 type foodCategoriesType = {
   _id: number;
   name: string;
 };
 
-export const FoodCategory = () => {
+export const Food = () => {
   const [foodCategories, setFoodCategories] = useState<foodCategoriesType[]>(
     []
   );
