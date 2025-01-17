@@ -7,7 +7,7 @@ import { CategoryAdd } from "./Category-add";
 import { Badge } from "@/components/ui/badge";
 import { useSearchParams } from "next/navigation";
 import Link from "next/link";
-type foodCategoriesType = {
+export type foodCategoriesType = {
   _id: number;
   name: string;
 };
@@ -17,7 +17,6 @@ export const FoodCategory = () => {
     []
   );
   const [inputValue, setInputValue] = useState();
- 
 
   const addFoodCategory = async () => {
     const response = await fetch(`http://localhost:8000/admin/food_menu`, {
@@ -40,22 +39,31 @@ export const FoodCategory = () => {
 
   return (
     <div className="bg-[#FFFFFF] w-full h-100% rounded-xl p-4 mt-[80px] mb-[50px]">
-      <div className="py-3 text-[#09090B] text-[20px] font-[600]">Dishes category</div>
+      <div className="py-3 text-[#09090B] text-[20px] font-[600]">
+        Dishes category
+      </div>
       <div className="flex flex-wrap gap-2">
-        {foodCategories.map((items: any) => (
-          <Link key={`link-${items._id}`} href={`/admin/food_menu/${items?._id}`}>
-          <Badge
-            key={`category-${items?._id}`}
-            className="rounded-full py-2 px-3 "
-            variant="outline"
-          >
-            <p className="text-[#18181B] text-[14px] font-[500] ">
-              {items?.categoryName}
-            </p>
+        <Link href={"/admin/food_menu"}>
+          <Badge className="rounded-full py-2 px-3 " variant={"outline"}>
+            All dishes
           </Badge>
+        </Link>
+        {foodCategories.map((items: any) => (
+          <Link
+            key={`link-${items._id}`}
+            href={`/admin/food_menu/${items?._id}`}
+          >
+            <Badge
+              key={`category-${items?._id}`}
+              className="rounded-full py-2 px-3 "
+              variant="outline"
+            >
+              <p className="text-[#18181B] text-[14px] font-[500] ">
+                {items?.categoryName}
+              </p>
+            </Badge>
           </Link>
         ))}
-
         <CategoryAdd
           addFoodCategory={addFoodCategory}
           setInputValue={setInputValue}
