@@ -1,7 +1,7 @@
 import type { Metadata } from "next";
 import { Geist, Geist_Mono } from "next/font/google";
 import "./globals.css";
-import { LeftSideBar } from "./_components/Leftside-bar";
+import { LeftSideBar } from "../_components/Leftside-bar";
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -24,8 +24,13 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="en">
-      <body>{children}</body>
-    </html>
+    <body>
+      <div className="bg-[#F4F4F5] h-screen flex gap-5">
+        <LeftSideBar />
+        <main className="flex flex-col overflow-scroll w-full ">
+          <div className="px-10">{children}</div>
+        </main>
+      </div>
+    </body>
   );
 }

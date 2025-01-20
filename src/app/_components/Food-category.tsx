@@ -17,7 +17,7 @@ export const FoodCategory = () => {
     []
   );
   const [inputValue, setInputValue] = useState();
-  const [categoryCategory, setCategoryCategory] = useState([])
+  const [categoryCategory, setCategoryCategory] = useState([]);
   const addFoodCategory = async () => {
     const response = await fetch(`http://localhost:8000/admin/food_menu`, {
       method: "POST",
@@ -51,13 +51,11 @@ export const FoodCategory = () => {
         {foodCategories.map((items: any) => (
           <Link
             key={`link-${items._id}`}
-            href={`/admin/food_menu/${items?._id}`}
-          >
+            href={`/admin/food_menu/${items?._id}`}>
             <Badge
               key={`category-${items?._id}`}
               className="rounded-full py-2 px-3 "
-              variant="outline"
-            >
+              variant="outline">
               <p className="text-[#18181B] text-[14px] font-[500] ">
                 {items?.categoryName}
               </p>
