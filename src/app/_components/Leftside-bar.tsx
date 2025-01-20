@@ -8,7 +8,7 @@ import Link from "next/link";
 export const LeftSideBar = () => {
   return (
     <>
-    <div className="px-[20px]">
+    <div className="px-[20px] h-screen">
       <div className="flex gap-[5px] justify-center py-[40px]">
         <img className="w-[40px] h-[40px]" src="/Logo.png"></img>
         <div>

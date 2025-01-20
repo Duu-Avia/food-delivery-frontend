@@ -17,7 +17,7 @@ export const FoodCategory = () => {
     []
   );
   const [inputValue, setInputValue] = useState();
-
+  const [categoryCategory, setCategoryCategory] = useState([])
   const addFoodCategory = async () => {
     const response = await fetch(`http://localhost:8000/admin/food_menu`, {
       method: "POST",
