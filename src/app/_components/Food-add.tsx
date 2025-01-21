@@ -41,9 +41,7 @@ export const FoodAdd = ({ itemsID }) => {
 
   useEffect(() => {
     const fetchData = async () => {
-      const response = await fetch(
-        `http://localhost:8000/admin/food_menu/food`
-      );
+      const response = await fetch(`http://localhost:8000/admin/food_menu/food/${itemsID}`);
       const data = await response.json();
       setFoods(data);
     };
@@ -85,6 +83,7 @@ export const FoodAdd = ({ itemsID }) => {
                     <Input
                       onChange={nameChangeHandler}
                       id="name"
+                      type="text"
                       placeholder="Type food name"
                       className="col-span-3"
                     />
@@ -94,6 +93,7 @@ export const FoodAdd = ({ itemsID }) => {
                     <Input
                       onChange={priceChangeHandler}
                       id="username"
+                      type="number"
                       placeholder="Enter price..."
                       className="col-span-3"
                     />
@@ -104,6 +104,7 @@ export const FoodAdd = ({ itemsID }) => {
                   <Input
                     onChange={ingredientsChangeHandler}
                     id="username"
+                    type="text"
                     placeholder="List ingredients..."
                     className="pb-[60px] pt-[20px]"
                   />

@@ -51,7 +51,7 @@ export const FoodCategory = () => {
         {foodCategories.map((items: any) => (
           <Link
             key={`link-${items._id}`}
-            href={`/admin/food_menu/${items?._id}`}>
+            href={`/admin/food_menu/food/${items?._id}`}>
             <Badge
               key={`category-${items?._id}`}
               className="rounded-full py-2 px-3 "

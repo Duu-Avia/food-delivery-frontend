@@ -20,6 +20,8 @@ type foodTypes = {
 
 export default function FoodPage() {
   const { id } = useParams();
+  const searchParams =  useSearchParams(); 
+  const categoryId = searchParams.get("categoryId");
   const [foods, setFoods] = useState<foodTypes[]>([]);
   const [categoryData, setCategoryData] = useState<any>();
 
@@ -39,7 +41,8 @@ export default function FoodPage() {
     fetchCategory();
     fetchData();
   }, []);
-
+  console.log(foods)
+console.log(id)
   return (
     <>
       <FoodCategory />
@@ -52,7 +55,7 @@ export default function FoodPage() {
         </div>
         <div className="flex gap-3 items-center">
           <FoodAdd itemsID={id} />
-          <FoodCard itemsID={id} />
+          <FoodCard itemsID={id}  />
         </div>
       </div>
     </>

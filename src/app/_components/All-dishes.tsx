@@ -16,7 +16,7 @@ export const AllDishes = () => {
     };
     fetchData();
   }, []);
-  console.log(id);
+ 
   return (
     <>
       {foodCategories?.map((items?: any) => (
