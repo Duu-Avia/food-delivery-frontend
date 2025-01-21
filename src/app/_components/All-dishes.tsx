@@ -10,7 +10,7 @@ export const AllDishes = () => {
   const [foodCategories, setFoodCategories] = useState([]);
   useEffect(() => {
     const fetchData = async () => {
-      const response = await fetch(`http://localhost:8000/admin/food_menu/`);
+      const response = await fetch(`http://localhost:8000/admin/food_menu`);
       const data = await response.json();
       setFoodCategories(data);
     };

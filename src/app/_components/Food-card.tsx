@@ -43,6 +43,7 @@ export function FoodCard({ itemsID, foodCategories, singleCategoryName }: any) {
   const [newFoodPrice, setNewFoodPrice] = useState("");
   const [newFoodIngredients, setNewFooDIngredients] = useState("");
   const [newImageUrl, setNewImageUrl] = useState("");
+  const [selectOption, setSelectOption] = useState("");
   const editFood = async () => {
     const response = await fetch(
       `http://localhost:8000/admin/food_menu/food/${foodId}`,
@@ -84,17 +85,6 @@ export function FoodCard({ itemsID, foodCategories, singleCategoryName }: any) {
     fetchData();
   }, []);
 
-  useEffect(() => {
-    if (foods.length > 0) {
-      const firstFood = foods[0];
-      setNewFoodName(firstFood.foodName);
-      setNewFoodPrice(firstFood.price);
-      setNewFooDIngredients(firstFood.ingredients);
-      setNewImageUrl(firstFood.image);
-      setNewFoodCategory(firstFood.category);
-    }
-  }, [foods]);
-
   const nameHandler = (e) => {
     setNewFoodName(e.target.value);
   };
@@ -110,11 +100,12 @@ export function FoodCard({ itemsID, foodCategories, singleCategoryName }: any) {
   const imageUrlHandler = (e) => {
     setNewImageUrl(e.target.value);
   };
-
+  console.log(foodId);
+  console.log(singleCategoryName);
   return (
     <>
       <div className="flex gap-5 p-2">
-        {foods.map((food?: any) => (
+        {foods?.map((food?: any) => (
           <div
             className="relative p-3 border-solid border-[1px] border-[#E4E4E7] rounded-lg w-[270px] h-[241px]"
             key={food?._id}>
@@ -131,7 +122,7 @@ export function FoodCard({ itemsID, foodCategories, singleCategoryName }: any) {
             <Dialog>
               <DialogTrigger asChild>
                 <Button
-                  onClick={() => setFoodId(food._id)}
+                  onClick={() => setFoodId(food?._id)}
                   className="absolute top-[70px] left-[200px] rounded-full size-[45px] bg-[#FFFFFF]"
                   variant="outline">
                   <Pencil className="text-[#EF4444] " />
@@ -147,7 +138,7 @@ export function FoodCard({ itemsID, foodCategories, singleCategoryName }: any) {
                     <Label className="text-left">Dish name</Label>
                     <Input
                       onChange={nameHandler}
-                      value={newFoodName}
+                      defaultValue={food?.foodName}
                       className="w-[280px]"
                     />
                   </div>
@@ -155,14 +146,14 @@ export function FoodCard({ itemsID, foodCategories, singleCategoryName }: any) {
                     <Label className="text-left">Dish category</Label>
                     <Select>
                       <SelectTrigger className="w-[280px]">
-                        <SelectValue placeholder={singleCategoryName} />
+                        <SelectValue />
                       </SelectTrigger>
                       <SelectContent>
                         <SelectGroup>
                           {foodCategories?.map((categories) => (
                             <SelectItem
                               key={`select-${categories?._id}`}
-                              value={newFoodCategory}>
+                              value={singleCategoryName}>
                               {categories.categoryName}
                             </SelectItem>
                           ))}
@@ -174,7 +165,7 @@ export function FoodCard({ itemsID, foodCategories, singleCategoryName }: any) {
                     <Label className="text-left">ingredients</Label>
                     <Input
                       onChange={ingredientsHandler}
-                      value={newFoodIngredients}
+                      value={food?.ingredients}
                       className="w-[280px] py-[50px]"
                     />
                   </div>
@@ -182,7 +173,7 @@ export function FoodCard({ itemsID, foodCategories, singleCategoryName }: any) {
                     <Label className="text-left">Price</Label>
                     <Input
                       onChange={priceHandler}
-                      value={newFoodPrice}
+                      value={food?.price}
                       className="w-[280px]"
                     />
                   </div>
@@ -191,7 +182,6 @@ export function FoodCard({ itemsID, foodCategories, singleCategoryName }: any) {
                     <Input
                       onChange={imageUrlHandler}
                       type="file"
-                      value=""
                       className=" w-[288px] h-[116px] border-dashed border-[#2563EB0D] bg-[#2563EB0D]"
                     />
                   </div>

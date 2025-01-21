@@ -24,13 +24,13 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <body>
+    <>
       <div className="bg-[#F4F4F5] h-screen flex gap-5">
         <LeftSideBar />
-        <main className="flex flex-col overflow-scroll w-full ">
+        <div className="flex flex-col overflow-scroll w-full ">
           <div className="px-10">{children}</div>
-        </main>
+        </div>
       </div>
-    </body>
+    </>
   );
 }

@@ -39,14 +39,16 @@ export const FoodAdd = ({ itemsID }) => {
     setFoods([...foods, data.newFood]);
   };
 
-  // useEffect(()=>{
-  //   const fetchData = async() => {
-  //     const response = await fetch(`http://localhost:8000/admin/food_menu/food`);
-  //     const data = await response.json();
-  //     setFoods(data);
-  // }
-  // fetchData()
-  // },[])
+  useEffect(() => {
+    const fetchData = async () => {
+      const response = await fetch(
+        `http://localhost:8000/admin/food_menu/food`
+      );
+      const data = await response.json();
+      setFoods(data);
+    };
+    fetchData();
+  }, []);
 
   const nameChangeHandler = (e) => {
     setFoodName(e.target.value);
