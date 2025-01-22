@@ -43,7 +43,7 @@ export function FoodCard({ itemsID, foodCategories, singleCategoryName }: any) {
 
   useEffect(() => {
     const fetchData = async () => {
-      const response = await fetch(`http://localhost:8000/admin/food_menu/food/${itemsID}`);
+      const response = await fetch(`http://localhost:8000/dishes/${itemsID}`);
       const data = await response.json();
       setFoods(data);
     };
@@ -51,7 +51,7 @@ export function FoodCard({ itemsID, foodCategories, singleCategoryName }: any) {
   }, []);
 
   const editFood = async (formData: any) => {
-    const response = await fetch(`http://localhost:8000/admin/food_menu/food/${foodId}`, {
+    const response = await fetch(`http://localhost:8000/dishes/${foodId}`, {
       method: "PUT",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify({
@@ -68,7 +68,7 @@ export function FoodCard({ itemsID, foodCategories, singleCategoryName }: any) {
   };
 
   const deleteFood = async () => {
-    const response = await fetch(`http://localhost:8000/admin/food_menu/food`, {
+    const response = await fetch(`http://localhost:8000/dishes`, {
       method: "DELETE",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify({

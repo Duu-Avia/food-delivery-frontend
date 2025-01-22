@@ -24,7 +24,7 @@ export const FoodAdd = ({ itemsID }) => {
   const [ingredients, setIngredients] = useState("");
   const [foodImage, setFoodImage] = useState("");
   const addFoods = async () => {
-    const response = await fetch(`http://localhost:8000/admin/food_menu/food`, {
+    const response = await fetch(`http://localhost:8000/dishes`, {
       method: "POST",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify({
@@ -41,7 +41,7 @@ export const FoodAdd = ({ itemsID }) => {
 
   useEffect(() => {
     const fetchData = async () => {
-      const response = await fetch(`http://localhost:8000/admin/food_menu/food/${itemsID}`);
+      const response = await fetch(`http://localhost:8000/dishes/${itemsID}`);
       const data = await response.json();
       setFoods(data);
     };

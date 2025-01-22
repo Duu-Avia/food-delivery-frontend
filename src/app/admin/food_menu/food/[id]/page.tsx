@@ -20,21 +20,19 @@ type foodTypes = {
 
 export default function FoodPage() {
   const { id } = useParams();
-  const searchParams =  useSearchParams(); 
-  const categoryId = searchParams.get("categoryId");
   const [foods, setFoods] = useState<foodTypes[]>([]);
   const [categoryData, setCategoryData] = useState<any>();
 
   useEffect(() => {
     const fetchData = async () => {
       const response = await fetch(
-        `http://localhost:8000/admin/food_menu/food/${id}`
+        `http://localhost:8000/dishes/${id}`
       );
       const data = await response.json();
       setFoods(data);
     };
     const fetchCategory = async () => {
-      const response = await fetch(`http://localhost:8000/admin/food_menu`);
+      const response = await fetch(`http://localhost:8000/food_category`);
       const data = await response.json();
       setCategoryData(data);
     };

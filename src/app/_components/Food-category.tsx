@@ -28,7 +28,7 @@ export const FoodCategory = () => {
 
   useEffect(() => {
     const fetchData = async () => {
-      const response = await fetch(`http://localhost:8000/admin/food_menu`);
+      const response = await fetch(`http://localhost:8000/food_category`);
       const data = await response.json();
       setFoodCategories(data);
     };
