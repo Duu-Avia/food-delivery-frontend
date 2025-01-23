@@ -34,7 +34,7 @@ type foodTypes = {
   ingredients: String;
   category: String;
 };
-
+const CLOUDINARY_CLOUD_NAME = "dku0azubr";
 export function FoodCard({ itemsID, foodCategories, singleCategoryName }: any) {
   const [foods, setFoods] = useState<foodTypes[]>([]);
   const [foodId, setFoodId] = useState("");
@@ -78,8 +78,21 @@ export function FoodCard({ itemsID, foodCategories, singleCategoryName }: any) {
     const data = await response.json();
   };
 
-  const imageUrlHandler = (e) => {
-    setNewImageUrl(e.target.value);
+  const imageUrlHandler = async (event) => {
+    if (event.target.files && event.target.files.length > 0) {
+      const file = event.target.files[0];
+      console.log(event.target.files[0]);
+      const data = new FormData();
+      data.append("file", file);
+      data.append("upload_preset", "food-delivery");
+
+      const response = await fetch(`https://api.cloudinary.com/v1_1/${CLOUDINARY_CLOUD_NAME}/upload`, {
+        method: "PUT",
+        body: data,
+      });
+      const dataJson = await response.json();
+      setNewImageUrl(dataJson.secure_url);
+    }
   };
 
   console.log(foods);
@@ -91,7 +104,13 @@ export function FoodCard({ itemsID, foodCategories, singleCategoryName }: any) {
             className="relative p-3 border-solid border-[1px] border-[#E4E4E7] rounded-lg w-[270px] h-[241px]"
             key={`foody-${food?._id}`}
           >
-            <div className="w-[238px] h-[129px]"></div>
+            <div className="w-[238px] h-[129px]">
+              {food?.image ? (
+                <img src={food?.image} />
+              ) : (
+                <div className="w-[238px] h-[129px] bg-gray-100 flex justify-center items-center">No image</div>
+              )}
+            </div>
             <div className="flex items-center justify-between">
               <div className="text-[1rem] text-[#EF4444] font-[500]">{food?.foodName}</div>
               <div className="text-[0.8rem] text-[#09090B] pl-[100px]">${food?.price}</div>
@@ -100,7 +119,9 @@ export function FoodCard({ itemsID, foodCategories, singleCategoryName }: any) {
             <Dialog>
               <DialogTrigger asChild>
                 <Button
-                  onClick={() => setFoodId(food?._id)}
+                  onClick={() => {
+                    setFoodId(food?._id);
+                  }}
                   className="absolute top-[70px] left-[200px] rounded-full size-[45px] bg-[#FFFFFF]"
                   variant="outline"
                 >
@@ -153,13 +174,21 @@ export function FoodCard({ itemsID, foodCategories, singleCategoryName }: any) {
                       <Label className="text-left">Price</Label>
                       <Input name="price" type="number" defaultValue={food?.price} className="w-[280px]" />
                     </div>
-                    <div className="flex items-center justify-around">
+                    <div className="relative flex items-center justify-around">
                       <Label className="text-left ml-[-30px]">Image</Label>
                       <Input
                         onChange={imageUrlHandler}
                         type="file"
-                        className=" w-[288px] h-[116px] border-dashed border-[#2563EB0D] bg-[#2563EB0D]"
+                        className="absolute w-[288px] h-[116px] left-[110px]  border-dashed border-[#2563EB0D] bg-[#2563EB0D]"
                       />
+                      {newImageUrl ? (
+                        <img src={newImageUrl} />
+                      ) : (
+                        <img
+                          src={food?.image}
+                          className="w-[238px] h-[129px] bg-gray-100 flex justify-center items-center"
+                        />
+                      )}
                     </div>
                   </div>
                 </form>

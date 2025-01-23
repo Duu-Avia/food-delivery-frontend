@@ -13,7 +13,7 @@ export const HomeSection = () => {
       const data = await response.json();
       setCategories(data);
     };
-  
+
     fetchCategories();
   }, []);
 
@@ -22,10 +22,9 @@ export const HomeSection = () => {
       <img className="w-full" src="./homeLogo.png" alt="" />
       <div className="px-[90px] py-7">
         <div className="text-[1.9rem] text-[#FFFFFF] font-600">Categories</div>
-        <CategoryScroll categoryData={categories}/>
+        <CategoryScroll categoryData={categories} />
       </div>
-      <HomeFoodContainer categoryData={categories}/>
-      
+      <HomeFoodContainer categoryData={categories} />
     </>
   );
 };

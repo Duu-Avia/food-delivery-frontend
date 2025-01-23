@@ -14,17 +14,17 @@ import { DialogClose } from "@radix-ui/react-dialog";
 import { Pencil, Trash } from "lucide-react";
 import { useEffect, useState } from "react";
 
-export const HomeFoodCard = ({itemsId, }) => {
+export const HomeFoodCard = ({ itemsId }) => {
   const [cardFoodData, setCardFoodData] = useState([]);
   useEffect(() => {
-  const fetchFoods = async () => {
-    const response = await fetch(`http://localhost:8000/dishes/${itemsId}`);
-    const data = await response.json();
-    setCardFoodData(data);
-  }
-  fetchFoods();
-  },[]);
-  console.log("from card id", itemsId,);
+    const fetchFoods = async () => {
+      const response = await fetch(`http://localhost:8000/dishes/${itemsId}`);
+      const data = await response.json();
+      setCardFoodData(data);
+    };
+    fetchFoods();
+  }, []);
+  console.log("from card id", itemsId);
   console.log("from card", cardFoodData);
   return (
     <>

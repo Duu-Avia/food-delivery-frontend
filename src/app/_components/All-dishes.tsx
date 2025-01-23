@@ -7,6 +7,7 @@ import { FoodAdd } from "./Food-add";
 
 export const AllDishes = () => {
   const [foodCategories, setFoodCategories] = useState([]);
+  // const [foodData, setFoodData] = useState([]);
   useEffect(() => {
     const fetchData = async () => {
       const response = await fetch(`http://localhost:8000/food_category`);
@@ -15,6 +16,14 @@ export const AllDishes = () => {
     };
     fetchData();
   }, []);
+  // useEffect(() => {
+  //   const fetchData = async () => {
+  //     const response = await fetch(`http://localhost:8000/dishes`);
+  //     const data = await response.json();
+  //     setFoodData(data);
+  //   };
+  //   fetchData();
+  // }, []);
 
   return (
     <>

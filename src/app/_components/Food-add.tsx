@@ -17,12 +17,15 @@ import { Plus } from "lucide-react";
 import { useParams } from "next/navigation";
 import { useEffect, useState } from "react";
 
+const CLOUDINARY_CLOUD_NAME = "dku0azubr";
+
 export const FoodAdd = ({ itemsID }) => {
   const [foods, setFoods] = useState([]);
   const [foodName, setFoodName] = useState("");
   const [foodPrice, setFoodPrice] = useState("");
   const [ingredients, setIngredients] = useState("");
   const [foodImage, setFoodImage] = useState("");
+
   const addFoods = async () => {
     const response = await fetch(`http://localhost:8000/dishes`, {
       method: "POST",
@@ -38,7 +41,7 @@ export const FoodAdd = ({ itemsID }) => {
     const data = await response.json();
     setFoods([...foods, data.newFood]);
   };
-
+  console.log(foodImage);
   useEffect(() => {
     const fetchData = async () => {
       const response = await fetch(`http://localhost:8000/dishes/${itemsID}`);
@@ -57,8 +60,22 @@ export const FoodAdd = ({ itemsID }) => {
   const ingredientsChangeHandler = (e) => {
     setIngredients(e.target.value);
   };
-  const ImageChangeHandler = (e) => {
-    setFoodImage(e.target.value);
+  const ImageChangeHandler = async (event: React.ChangeEvent<HTMLInputElement>) => {
+    if (event.target.files && event.target.files.length > 0) {
+      const file = event.target.files[0];
+      console.log(event.target.files[0]);
+      const data = new FormData();
+      data.append("file", file);
+      data.append("upload_preset", "food-delivery");
+
+      const response = await fetch(`https://api.cloudinary.com/v1_1/${CLOUDINARY_CLOUD_NAME}/upload`, {
+        method: "POST",
+        body: data,
+      });
+
+      const dataJson = await response.json();
+      setFoodImage(dataJson.secure_url);
+    }
   };
   return (
     <>
@@ -66,9 +83,7 @@ export const FoodAdd = ({ itemsID }) => {
         <div className="pt-[60px]">
           <Dialog>
             <DialogTrigger asChild>
-              <Button
-                className="rounded-full size-[36px] bg-[#EF4444]"
-                variant="outline">
+              <Button className="rounded-full size-[36px] bg-[#EF4444]" variant="outline">
                 <Plus className="text-white" />
               </Button>
             </DialogTrigger>
@@ -109,7 +124,7 @@ export const FoodAdd = ({ itemsID }) => {
                     className="pb-[60px] pt-[20px]"
                   />
                 </div>
-                <div className=" items-center gap-4">
+                <div className="relative items-center gap-4">
                   <Label htmlFor="username" className="text-right">
                     Food image
                   </Label>
@@ -118,6 +133,7 @@ export const FoodAdd = ({ itemsID }) => {
                     type="file"
                     className="w-[412px] h-[138px] border-dashed border-[#2563EB0D] bg-[#2563EB0D]"
                   />
+                  {foodImage && <img className="w-[412px] h-[138px] absolute top-5 left-0" src={foodImage} alt="" />}
                 </div>
               </div>
               <DialogFooter>
@@ -131,9 +147,7 @@ export const FoodAdd = ({ itemsID }) => {
           </Dialog>
         </div>
 
-        <div className="text-[#09090B] w-[100%] px-[30px]">
-          Add new Dish to Appetizers{" "}
-        </div>
+        <div className="text-[#09090B] w-[100%] px-[30px]">Add new Dish to Appetizers </div>
       </div>
     </>
   );
