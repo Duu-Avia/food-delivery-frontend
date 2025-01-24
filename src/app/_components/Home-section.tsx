@@ -1,9 +1,9 @@
 "use client";
 import { useEffect, useState } from "react";
-import { CategoryScroll } from "./Category-scroll";
 import { HomeFoodContainer } from "./HomeFood-container";
 import { useParams } from "next/navigation";
 import { HomeFoodCard } from "./HomeFood-card";
+import { CategoryScroll } from "./Category-scroll";
 
 export const HomeSection = () => {
   const [categories, setCategories] = useState([]);

@@ -1,14 +1,6 @@
 import { Button } from "@/components/ui/button";
 
-import {
-  Dialog,
-  DialogContent,
-  DialogDescription,
-  DialogFooter,
-  DialogHeader,
-  DialogTitle,
-  DialogTrigger,
-} from "@/components/ui/dialog";
+import { Dialog, DialogContent, DialogDescription, DialogFooter, DialogHeader, DialogTitle, DialogTrigger } from "@/components/ui/dialog";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { DialogClose } from "@radix-ui/react-dialog";
@@ -91,51 +83,34 @@ export const FoodAdd = ({ itemsID }) => {
               <DialogHeader>
                 <DialogTitle>{`Add new Dish to Foodname`}</DialogTitle>
               </DialogHeader>
+
               <div className="grid gap-4 py-4">
                 <div className="flex gap-5">
                   <div className="grid grid-cols-2 items-center gap-4">
                     <Label htmlFor="name">Food name</Label>
-                    <Input
-                      onChange={nameChangeHandler}
-                      id="name"
-                      type="text"
-                      placeholder="Type food name"
-                      className="col-span-3"
-                    />
+                    <Input onChange={nameChangeHandler} id="name" type="text" placeholder="Type food name" className="col-span-3" />
                   </div>
+
                   <div className="grid grid-cols-2 items-center gap-4">
                     <Label htmlFor="username">Food price</Label>
-                    <Input
-                      onChange={priceChangeHandler}
-                      id="username"
-                      type="number"
-                      placeholder="Enter price..."
-                      className="col-span-3"
-                    />
+                    <Input onChange={priceChangeHandler} id="username" type="number" placeholder="Enter price..." className="col-span-3" />
                   </div>
                 </div>
+
                 <div className=" items-center gap-4 ">
                   <Label htmlFor="username">Ingredients</Label>
-                  <Input
-                    onChange={ingredientsChangeHandler}
-                    id="username"
-                    type="text"
-                    placeholder="List ingredients..."
-                    className="pb-[60px] pt-[20px]"
-                  />
+                  <Input onChange={ingredientsChangeHandler} id="username" type="text" placeholder="List ingredients..." className="pb-[60px] pt-[20px]" />
                 </div>
+
                 <div className="relative items-center gap-4">
                   <Label htmlFor="username" className="text-right">
                     Food image
                   </Label>
-                  <Input
-                    onChange={ImageChangeHandler}
-                    type="file"
-                    className="w-[412px] h-[138px] border-dashed border-[#2563EB0D] bg-[#2563EB0D]"
-                  />
+                  <Input onChange={ImageChangeHandler} type="file" className="w-[412px] h-[138px] border-dashed border-[#2563EB0D] bg-[#2563EB0D]" />
                   {foodImage && <img className="w-[412px] h-[138px] absolute top-5 left-0" src={foodImage} alt="" />}
                 </div>
               </div>
+
               <DialogFooter>
                 <DialogClose asChild>
                   <Button onClick={addFoods} type="submit">

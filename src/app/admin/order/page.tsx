@@ -1,3 +1,3 @@
-export default function AdminOrder(){
-    return(<div>hi</div>)
+export default function AdminOrder() {
+  return <div>hi</div>;
 }

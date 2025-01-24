@@ -1,4 +1,5 @@
 import { Button } from "@/components/ui/button";
+import Link from "next/link";
 import Image from "next/image";
 
 export function HomeHeader() {
@@ -20,14 +21,12 @@ export function HomeHeader() {
       </div>
       <div className="flex gap-5 ">
         <div>
-          <Button className="bg-[#FFFFFF] text-[#18181B] text-[14px] w-[75px] h-[36px] rounded-full ">
-            Sign up
-          </Button>
+          <Link href="/create_account">
+            <Button className="bg-[#FFFFFF] text-[#18181B] text-[14px] w-[75px] h-[36px] rounded-full ">Sign up</Button>
+          </Link>
         </div>
         <div>
-          <Button className="bg-[#EF4444] text-[#FFFFFF] text-[14px]  w-[75px] h-[36px] rounded-full">
-            Log in
-          </Button>
+          <Button className="bg-[#EF4444] text-[#FFFFFF] text-[14px]  w-[75px] h-[36px] rounded-full">Log in</Button>
         </div>
       </div>
     </div>

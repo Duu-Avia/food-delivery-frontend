@@ -3,28 +3,11 @@
 import { useEffect, useState } from "react";
 import { useParams, useSearchParams } from "next/navigation";
 import { Button } from "@/components/ui/button";
-import {
-  Dialog,
-  DialogClose,
-  DialogContent,
-  DialogDescription,
-  DialogFooter,
-  DialogHeader,
-  DialogTitle,
-  DialogTrigger,
-} from "@/components/ui/dialog";
+import { Dialog, DialogClose, DialogContent, DialogDescription, DialogFooter, DialogHeader, DialogTitle, DialogTrigger } from "@/components/ui/dialog";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Pencil, Trash } from "lucide-react";
-import {
-  Select,
-  SelectContent,
-  SelectGroup,
-  SelectItem,
-  SelectLabel,
-  SelectTrigger,
-  SelectValue,
-} from "@/components/ui/select";
+import { Select, SelectContent, SelectGroup, SelectItem, SelectLabel, SelectTrigger, SelectValue } from "@/components/ui/select";
 
 type foodTypes = {
   _id: Number;
@@ -98,19 +81,10 @@ export function FoodCard({ itemsID, foodCategories, singleCategoryName }: any) {
   console.log(foods);
   return (
     <>
-      <div className="flex gap-5 p-2">
+      <div className="flex flex-wrap gap-5 p-2">
         {foods?.map((food?: any) => (
-          <div
-            className="relative p-3 border-solid border-[1px] border-[#E4E4E7] rounded-lg w-[270px] h-[241px]"
-            key={`foody-${food?._id}`}
-          >
-            <div className="w-[238px] h-[129px]">
-              {food?.image ? (
-                <img src={food?.image} />
-              ) : (
-                <div className="w-[238px] h-[129px] bg-gray-100 flex justify-center items-center">No image</div>
-              )}
-            </div>
+          <div className="relative p-3 border-solid border-[1px] border-[#E4E4E7] rounded-lg w-[270px] h-[241px]" key={`foody-${food?._id}`}>
+            <div className="w-[238px] h-[129px]">{food?.image ? <img className="w-[238px] h-[129px] rounded-xl" src={food?.image || null} /> : <div className="w-[238px] h-[129px] bg-gray-100 flex justify-center items-center">No image</div>}</div>
             <div className="flex items-center justify-between">
               <div className="text-[1rem] text-[#EF4444] font-[500]">{food?.foodName}</div>
               <div className="text-[0.8rem] text-[#09090B] pl-[100px]">${food?.price}</div>
@@ -123,8 +97,7 @@ export function FoodCard({ itemsID, foodCategories, singleCategoryName }: any) {
                     setFoodId(food?._id);
                   }}
                   className="absolute top-[70px] left-[200px] rounded-full size-[45px] bg-[#FFFFFF]"
-                  variant="outline"
-                >
+                  variant="outline">
                   <Pencil className="text-[#EF4444] " />
                 </Button>
               </DialogTrigger>
@@ -145,8 +118,7 @@ export function FoodCard({ itemsID, foodCategories, singleCategoryName }: any) {
                         value={selectOption}
                         onValueChange={(value) => {
                           setSelectOption(value);
-                        }}
-                      >
+                        }}>
                         <SelectTrigger className="w-[280px]">
                           <SelectValue />
                         </SelectTrigger>
@@ -163,12 +135,7 @@ export function FoodCard({ itemsID, foodCategories, singleCategoryName }: any) {
                     </div>
                     <div className="grid grid-cols-4 items-center gap-4">
                       <Label className="text-left">ingredients</Label>
-                      <Input
-                        type="text"
-                        name="ingredients"
-                        defaultValue={food?.ingredients}
-                        className="w-[280px] py-[50px]"
-                      />
+                      <Input type="text" name="ingredients" defaultValue={food?.ingredients} className="w-[280px] py-[50px]" />
                     </div>
                     <div className="grid grid-cols-4 items-center gap-4">
                       <Label className="text-left">Price</Label>
@@ -176,19 +143,8 @@ export function FoodCard({ itemsID, foodCategories, singleCategoryName }: any) {
                     </div>
                     <div className="relative flex items-center justify-around">
                       <Label className="text-left ml-[-30px]">Image</Label>
-                      <Input
-                        onChange={imageUrlHandler}
-                        type="file"
-                        className="absolute w-[288px] h-[116px] left-[110px]  border-dashed border-[#2563EB0D] bg-[#2563EB0D]"
-                      />
-                      {newImageUrl ? (
-                        <img src={newImageUrl} />
-                      ) : (
-                        <img
-                          src={food?.image}
-                          className="w-[238px] h-[129px] bg-gray-100 flex justify-center items-center"
-                        />
-                      )}
+                      <Input onChange={imageUrlHandler} type="file" className="absolute w-[288px] h-[116px] left-[110px]  border-dashed border-[#2563EB0D] bg-[#2563EB0D]" />
+                      {newImageUrl ? <img className="w-[238px] h-[129px]" src={newImageUrl} alt="" /> : <img src={food?.image || null} className="w-[238px] h-[129px] bg-gray-100 flex justify-center items-center" alt="" />}
                     </div>
                   </div>
                 </form>
@@ -205,8 +161,7 @@ export function FoodCard({ itemsID, foodCategories, singleCategoryName }: any) {
                         const formData = new FormData(form);
                         editFood(formData);
                       }}
-                      type="button"
-                    >
+                      type="button">
                       Save changes
                     </Button>
                   </DialogClose>

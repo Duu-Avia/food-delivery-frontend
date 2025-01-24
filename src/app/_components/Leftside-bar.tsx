@@ -11,34 +11,28 @@ export const LeftSideBar = () => {
       <div className="flex gap-[5px] justify-center py-[40px]">
         <img className="w-[40px] h-[40px]" src="/Logo.png"></img>
         <div>
-          <div className="text-[#09090B] text-[1.125rem] font-[600]">
-            NomNom
-          </div>
+          <div className="text-[#09090B] text-[1.125rem] font-[600]">NomNom</div>
           <div className="text-[#71717A] text-[0.75rem]">Swift delivery</div>
         </div>
       </div>
       <div>
         <div className="py-[10px]">
           <Link href={`/admin/food_menu`}>
-            <Button
-              className=" border-none w-[165px] h-[40px] rounded-full hover:bg-[#18181B] hover:text-[#FAFAFA]"
-              variant="outline">
+            <Button className=" border-none w-[165px] h-[40px] rounded-full hover:bg-[#18181B] hover:text-[#FAFAFA]" variant="outline">
               <LayoutDashboard /> Food menu
             </Button>
           </Link>
         </div>
         <div className="py-[10px]">
-          <Button
-            className="border-none w-[165px] h-[40px] rounded-full hover:bg-[#18181B] hover:text-[#FAFAFA]"
-            variant="outline">
-            <LuTruck />
-            Orders
-          </Button>
+          <Link href={`/admin/order`}>
+            <Button className="border-none w-[165px] h-[40px] rounded-full hover:bg-[#18181B] hover:text-[#FAFAFA]" variant="outline">
+              <LuTruck />
+              Orders
+            </Button>
+          </Link>
         </div>
         <div className="py-[10px]">
-          <Button
-            className="border-none w-[165px] h-[40px] rounded-full hover:bg-[#18181B] hover:text-[#FAFAFA]"
-            variant="outline">
+          <Button className="border-none w-[165px] h-[40px] rounded-full hover:bg-[#18181B] hover:text-[#FAFAFA]" variant="outline">
             <Settings />
             Settings
           </Button>
