@@ -2,6 +2,13 @@ import type { Metadata } from "next";
 import { Geist, Geist_Mono } from "next/font/google";
 import "./globals.css";
 import { LeftSideBar } from "../_components/Leftside-bar";
+import {
+  ClerkProvider,
+  SignInButton,
+  SignedIn,
+  SignedOut,
+  UserButton
+} from '@clerk/nextjs'
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -23,14 +30,29 @@ export default function RootLayout({
 }: Readonly<{
   children: React.ReactNode;
 }>) {
+
+  
   return (
     <>
-      <div className="bg-[#F4F4F5] h-screen flex gap-5">
+     <ClerkProvider>
+     <SignedOut>
+        <div className="flex justify-center bg-[#EF4444] text-[#FFFFFF] text-[14px]  w-[75px] h-[36px] rounded-full">
+        <SignInButton  />
+        </div>
+          </SignedOut>
+          <SignedIn>
+            <div className="bg-[#F4F4F5] text-end"><UserButton /></div>
+            
+            <div className="bg-[#F4F4F5] h-screen flex gap-5">
         <LeftSideBar />
         <div className="flex flex-col overflow-scroll w-full ">
           <div className="px-10">{children}</div>
         </div>
       </div>
+         
+          </SignedIn> 
+      
+      </ClerkProvider>
     </>
   );
 }

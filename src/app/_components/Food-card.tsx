@@ -8,8 +8,9 @@ import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Pencil, Trash } from "lucide-react";
 import { Select, SelectContent, SelectGroup, SelectItem, SelectLabel, SelectTrigger, SelectValue } from "@/components/ui/select";
+import { useAuth } from "@clerk/nextjs";
 
-type foodTypes = {
+export type foodTypes = {
   _id: Number;
   foodName: String;
   price: Number;
@@ -23,10 +24,17 @@ export function FoodCard({ itemsID, foodCategories, singleCategoryName }: any) {
   const [foodId, setFoodId] = useState("");
   const [newImageUrl, setNewImageUrl] = useState("");
   const [selectOption, setSelectOption] = useState(singleCategoryName);
+  const { getToken } = useAuth();
+ 
 
   useEffect(() => {
     const fetchData = async () => {
-      const response = await fetch(`http://localhost:8000/dishes/${itemsID}`);
+      const token = await getToken();
+      const response = await fetch(`http://localhost:8000/dishes/${itemsID}`,{
+        headers:{
+          authentication:`${token}`
+        }
+      });
       const data = await response.json();
       setFoods(data);
     };

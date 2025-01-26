@@ -4,26 +4,11 @@ import { useEffect, useState } from "react";
 import { FoodCard } from "./Food-card";
 import { FoodCategory } from "./Food-category";
 import { FoodAdd } from "./Food-add";
+import { useAuthFetchData } from "./Use-AuthFetchData";
 
 export const AllDishes = () => {
-  const [foodCategories, setFoodCategories] = useState([]);
-  // const [foodData, setFoodData] = useState([]);
-  useEffect(() => {
-    const fetchData = async () => {
-      const response = await fetch(`http://localhost:8000/food_category`);
-      const data = await response.json();
-      setFoodCategories(data);
-    };
-    fetchData();
-  }, []);
-  // useEffect(() => {
-  //   const fetchData = async () => {
-  //     const response = await fetch(`http://localhost:8000/dishes`);
-  //     const data = await response.json();
-  //     setFoodData(data);
-  //   };
-  //   fetchData();
-  // }, []);
+const foodCategories = useAuthFetchData(`food_category`);
+
 
   return (
     <>

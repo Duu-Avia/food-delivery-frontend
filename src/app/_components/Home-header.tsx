@@ -1,6 +1,16 @@
 import { Button } from "@/components/ui/button";
 import Link from "next/link";
 import Image from "next/image";
+import {
+  ClerkProvider,
+  SignInButton,
+  SignedIn,
+  SignedOut,
+  UserButton
+} from '@clerk/nextjs'
+import { Input } from "@/components/ui/input";
+import { ShoppingCart } from "lucide-react";
+
 
 export function HomeHeader() {
   return (
@@ -21,12 +31,28 @@ export function HomeHeader() {
       </div>
       <div className="flex gap-5 ">
         <div>
-          <Link href="/create_account">
-            <Button className="bg-[#FFFFFF] text-[#18181B] text-[14px] w-[75px] h-[36px] rounded-full ">Sign up</Button>
-          </Link>
+      
+           
         </div>
         <div>
-          <Button className="bg-[#EF4444] text-[#FFFFFF] text-[14px]  w-[75px] h-[36px] rounded-full">Log in</Button>
+        <ClerkProvider> 
+      <SignedOut>
+        <div className="flex justify-center bg-[#EF4444] text-[#FFFFFF] text-[14px]  w-[75px] h-[36px] rounded-full">
+        <SignInButton  />
+        </div>
+          </SignedOut>
+
+          <SignedIn>
+          <div className="flex gap-5">
+          <Input placeholder="Add location" className="w-[200px] h-[36px] rounded-full bg-[#FFFFF] border-[1px] border-[#FFFFFF] text-[#FFFFFF] text-[14px]"/>
+          <Button className="w-[35px] h-[36px] rounded-full bg-[#FFFF] text-[#FFFFFF] text-[14px]"><ShoppingCart className="text-black"/></Button>
+
+            <UserButton />
+          </div>
+         
+          </SignedIn>
+        
+          </ClerkProvider>
         </div>
       </div>
     </div>
