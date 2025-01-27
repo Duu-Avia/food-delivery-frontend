@@ -6,9 +6,10 @@ import { DialogClose } from "@radix-ui/react-dialog";
 import { Minus, Pencil, Plus, Trash } from "lucide-react";
 import { useEffect, useState } from "react";
 const CLOUDINARY_CLOUD_NAME = "dku0azubr";
-export const HomeFoodCard = ({ itemsId }) => {
+export const HomeFoodCard = ({ itemsId , location}) => {
   const [cardFoodData, setCardFoodData] = useState([]);
   const [qty, setQty] = useState(0);
+  const [totalPrice, setTotalPrice] = useState(0);
   useEffect(() => {
     const fetchFoods = async () => {
       const response = await fetch(`http://localhost:8000/dishes/${itemsId}`);
@@ -18,6 +19,8 @@ export const HomeFoodCard = ({ itemsId }) => {
     fetchFoods();
   }, []);
 
+ 
+ console.log(location)
   return (
     <>
       <div className="flex gap-5 p-2">
@@ -49,7 +52,7 @@ export const HomeFoodCard = ({ itemsId }) => {
                           <div className="flex ">
                             <div>
                               <p>Total price</p>
-                              <div className="font-[600] pr-[200px]">${food?.price}</div>
+                              <div className="font-[600] pr-[200px]">${totalPrice}</div>
                             </div>
                             <div>
                               <div className="flex items-center gap-3">
@@ -57,14 +60,17 @@ export const HomeFoodCard = ({ itemsId }) => {
                                   onClick={() => {
                                     if (qty > 0) {
                                       setQty(qty - 1);
-                                    }
-                                  }}
+                                      setTotalPrice(totalPrice - food?.price);}}}
                                   className="size-[44px] rounded-full"
                                   variant={"outline"}>
                                   <Minus />
                                 </Button>
                                 <div>{qty}</div>
-                                <Button onClick={() => setQty(qty + 1)} className="size-[44px] rounded-full" variant={"outline"}>
+                                <Button onClick={() => {
+                                   setQty((prevQty) => {
+                                    const newQty = prevQty + 1
+                                    setTotalPrice(newQty * food?.price) 
+                                    return newQty})}} className="size-[44px] rounded-full" variant={"outline"}>
                                   <Plus />
                                 </Button>
                               </div>
@@ -73,7 +79,10 @@ export const HomeFoodCard = ({ itemsId }) => {
 
                           <div>
                             <DialogClose asChild>
-                              <Button className="w-full" type="button">
+                              <Button onClick={()=>{
+                                if(!location){
+                                  alert("Please add location")}
+                              }} className="w-full" type="button">
                                 Add to card
                               </Button>
                             </DialogClose>

@@ -10,9 +10,13 @@ import {
 } from '@clerk/nextjs'
 import { Input } from "@/components/ui/input";
 import { ShoppingCart } from "lucide-react";
+import { OrderDetail } from "./Order-detail";
 
 
-export function HomeHeader() {
+export function HomeHeader({ setLocation }) {
+  const locationHandler = (e) => {
+    setLocation(e.target.value);
+  }
   return (
     <div className="flex justify-between items-center w-screen h-100% bg-[#18181B] text-white  py-[10px] px-[70px]">
       <div className="flex">
@@ -44,9 +48,9 @@ export function HomeHeader() {
 
           <SignedIn>
           <div className="flex gap-5">
-          <Input placeholder="Add location" className="w-[200px] h-[36px] rounded-full bg-[#FFFFF] border-[1px] border-[#FFFFFF] text-[#FFFFFF] text-[14px]"/>
-          <Button className="w-[35px] h-[36px] rounded-full bg-[#FFFF] text-[#FFFFFF] text-[14px]"><ShoppingCart className="text-black"/></Button>
-
+          <Input onChange={locationHandler} placeholder="Add location" className="w-[200px] h-[36px] rounded-full bg-[#FFFFF] border-[1px] border-[#FFFFFF] text-black text-[14px]"/>
+          {/* <Button className="w-[35px] h-[36px] rounded-full bg-[#FFFF] text-[#FFFFFF] text-[14px]"><ShoppingCart className="text-black"/></Button> */}
+          <OrderDetail/>
             <UserButton />
           </div>
          
