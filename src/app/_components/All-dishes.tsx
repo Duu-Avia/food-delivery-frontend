@@ -7,8 +7,7 @@ import { FoodAdd } from "./Food-add";
 import { useAuthFetchData } from "./Use-AuthFetchData";
 
 export const AllDishes = () => {
-const foodCategories = useAuthFetchData(`food_category`);
-
+  const foodCategories = useAuthFetchData(`food_category`);
 
   return (
     <>
