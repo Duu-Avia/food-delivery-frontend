@@ -10,6 +10,7 @@ export const HomeFoodCard = ({ itemsId, location }) => {
   const [cardFoodData, setCardFoodData] = useState([]);
   const [qty, setQty] = useState(0);
   const [totalPrice, setTotalPrice] = useState(0);
+  
   useEffect(() => {
     const fetchFoods = async () => {
       const response = await fetch(`http://localhost:8000/dishes/${itemsId}`);
@@ -19,9 +20,10 @@ export const HomeFoodCard = ({ itemsId, location }) => {
     fetchFoods();
   }, []);
   const addFoodOrder = (food) => {
+  
     const oldOrderValue = localStorage.getItem("foodOrder");
     const oldOrderValueJson = JSON.parse(oldOrderValue || "[]");
-    const oldFilteredOrder = oldOrderValueJson.find((item) => item.food._id === itemsId);
+    const oldFilteredOrder = oldOrderValueJson.find((item) => item.food._id === food._id);
     if (oldFilteredOrder) {
       oldFilteredOrder.qty += 1;
     } else {
@@ -31,9 +33,11 @@ export const HomeFoodCard = ({ itemsId, location }) => {
       });
     }
     localStorage.setItem("foodOrder", JSON.stringify(oldOrderValueJson));
+    window.dispatchEvent(new Event("foodOrderUpdated"));
+    console.log(oldFilteredOrder)
   };
 
-  console.log(location);
+  
   return (
     <>
       <div className="flex gap-5 p-2">

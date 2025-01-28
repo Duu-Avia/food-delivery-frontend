@@ -3,16 +3,46 @@ import { Label } from "@/components/ui/label";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Popover, PopoverContent, PopoverTrigger } from "@/components/ui/popover";
-import { Minus, Plus, ShoppingCart } from "lucide-react";
+import { Minus, Plus, ShoppingCart, X } from "lucide-react";
 import { useEffect, useState } from "react";
 export const OrderDetail = () => {
-  const ordersString = localStorage.getItem("foodOrder");
-  const order = JSON.parse(ordersString || "[]");
   const [foodOrderItem, setFoodOrderItem] = useState([]);
-  const [qty, setQty] = useState(0);
+
+  // Fetch initial orders from localStorage
+
+  // const onMinusOrder = (idx) =>{
+    
+  //   const newOrderItems = foodOrderItem.map((orderItem, index)=>{
+  //     console.log(orderItem)
+  //     if (idx === index && orderItem.qty > 1){
+  //       return {...orderItem, qty: orderItem.qty -1,}
+        
+  //     } else {
+  //       return orderItem
+  //     }
+  //   })
+    
+  // }
+ 
   useEffect(() => {
-    setFoodOrderItem(order);
-  }, [ordersString]);
+    const handleOrderUpdate = () => {
+      const updatedOrder = JSON.parse(localStorage.getItem("foodOrder") || "[]");
+      setFoodOrderItem(updatedOrder);
+    };
+    
+    // deleteOrderedFood;
+    // Fetch the initial order
+    handleOrderUpdate();
+  
+    // Listen for custom event
+    window.addEventListener("foodOrderUpdated", handleOrderUpdate);
+  
+    // Cleanup listener on unmount
+    return () => {
+      window.removeEventListener("foodOrderUpdated", handleOrderUpdate);
+    };
+  }, []);
+
   return (
     <>
       <Popover>
@@ -33,7 +63,7 @@ export const OrderDetail = () => {
 
           <div className="bg-[#FAFAFA] w-full h-100% rounded-[25px] mt-5">
             <div>My cart</div>
-            {foodOrderItem?.map((item: any) => (
+            {foodOrderItem?.map((item: any, idx:Number) => (
               <div key={`order-${item?.food?._id}`} className="flex">
                 <div>
                   <img className="w-[124px] h-[120px] rounded-xl" src={item?.food.image} />
@@ -41,6 +71,7 @@ export const OrderDetail = () => {
                 <div>
                   <div>{item?.food?.foodName}</div>
                   <div>{item?.food?.ingredients}</div>
+                  <div><Button onClick={()=>{deleteOrderedFood(idx)}}><X/></Button></div>
                   <div>{item?.food?.qty}</div>
                   <div className="flex items-center justify-between pr-8">
                     <div className="flex items-center">
