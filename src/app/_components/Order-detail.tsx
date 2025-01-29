@@ -5,49 +5,62 @@ import { Input } from "@/components/ui/input";
 import { Popover, PopoverContent, PopoverTrigger } from "@/components/ui/popover";
 import { Minus, Plus, ShoppingCart, X } from "lucide-react";
 import { useEffect, useState } from "react";
+import { set } from "date-fns";
 export const OrderDetail = () => {
   const [foodOrderItem, setFoodOrderItem] = useState([]);
+  const [isOpen, setIsOpen] = useState(false);
 
-  // Fetch initial orders from localStorage
+  const onMinusOrder = (idx: Number) => {
+    const newOrderItems = foodOrderItem.map((orderItem, index) => {
+      if (idx === index && orderItem.qty > 1) {
+        return { ...orderItem, qty: orderItem.qty - 1 };
+      } else {
+        return orderItem;
+      }
+    });
+    setFoodOrderItem(newOrderItems);
+    localStorage.setItem("foodOrder", JSON.stringify(newOrderItems));
+  };
 
-  // const onMinusOrder = (idx) =>{
-    
-  //   const newOrderItems = foodOrderItem.map((orderItem, index)=>{
-  //     console.log(orderItem)
-  //     if (idx === index && orderItem.qty > 1){
-  //       return {...orderItem, qty: orderItem.qty -1,}
-        
-  //     } else {
-  //       return orderItem
-  //     }
-  //   })
-    
-  // }
- 
+  const onPlusOrder = (idx: Number) => {
+    const newOrderItems = foodOrderItem.map((orderItem, index) => {
+      if (idx === index) {
+        return { ...orderItem, qty: orderItem.qty + 1 };
+      } else {
+        return orderItem;
+      }
+    });
+    setFoodOrderItem(newOrderItems);
+    localStorage.setItem("foodOrder", JSON.stringify(newOrderItems));
+  };
+
+  const deleteOrderedFood = (idx: Number) => {
+    const newDeletedOrderItems = foodOrderItem.filter((item, index) => idx !== index);
+    setFoodOrderItem(newDeletedOrderItems);
+    localStorage.setItem("foodOrder", JSON.stringify(newDeletedOrderItems));
+  };
+  const calculateTotal = () => {
+    const totalPrice = foodOrderItem.reduce((total, orderItem) => {
+      return total + (orderItem.qty * orderItem.food.price || 0);
+    }, 0);
+    return totalPrice + 1;
+  };
+
   useEffect(() => {
     const handleOrderUpdate = () => {
       const updatedOrder = JSON.parse(localStorage.getItem("foodOrder") || "[]");
       setFoodOrderItem(updatedOrder);
     };
-    
-    // deleteOrderedFood;
+
     // Fetch the initial order
     handleOrderUpdate();
-  
-    // Listen for custom event
-    window.addEventListener("foodOrderUpdated", handleOrderUpdate);
-  
-    // Cleanup listener on unmount
-    return () => {
-      window.removeEventListener("foodOrderUpdated", handleOrderUpdate);
-    };
-  }, []);
+  }, [isOpen]);
 
   return (
     <>
-      <Popover>
+      <Popover open={isOpen} onOpenChange={(open) => setIsOpen(open)}>
         <PopoverTrigger asChild>
-          <Button variant="outline" className=" w-[35px] h-[36px] rounded-full bg-[#FFFF] text-[#FFFFFF] text-[14px]">
+          <Button onClick={() => setIsOpen(true)} variant="outline" className=" w-[35px] h-[36px] rounded-full bg-[#FFFF] text-[#FFFFFF] text-[14px]">
             <ShoppingCart className="text-black" />
           </Button>
         </PopoverTrigger>
@@ -61,9 +74,9 @@ export const OrderDetail = () => {
             <button className="flex-1 text-black font-medium h-full rounded-full  transition duration-200 hover:bg-[#EF4444] hover:text-[#FAFAFA] active:scale-95 ">Order</button>
           </div>
 
-          <div className="bg-[#FAFAFA] w-full h-100% rounded-[25px] mt-5">
+          <div className="bg-[#FAFAFA] w-full h-100% rounded-[25px] mt-5 px-3">
             <div>My cart</div>
-            {foodOrderItem?.map((item: any, idx:Number) => (
+            {foodOrderItem?.map((item: any, idx: Number) => (
               <div key={`order-${item?.food?._id}`} className="flex">
                 <div>
                   <img className="w-[124px] h-[120px] rounded-xl" src={item?.food.image} />
@@ -71,15 +84,20 @@ export const OrderDetail = () => {
                 <div>
                   <div>{item?.food?.foodName}</div>
                   <div>{item?.food?.ingredients}</div>
-                  <div><Button onClick={()=>{deleteOrderedFood(idx)}}><X/></Button></div>
+                  <div>
+                    <Button
+                      onClick={() => {
+                        deleteOrderedFood(idx);
+                      }}>
+                      <X />
+                    </Button>
+                  </div>
                   <div>{item?.food?.qty}</div>
                   <div className="flex items-center justify-between pr-8">
                     <div className="flex items-center">
                       <Button
                         onClick={() => {
-                          if (qty > 0) {
-                            setQty(qty - 1);
-                          }
+                          onMinusOrder(idx);
                         }}
                         variant={"none"}>
                         <Minus />
@@ -87,17 +105,39 @@ export const OrderDetail = () => {
                       <div>{item?.qty}</div>
                       <Button
                         onClick={() => {
-                          setQty(qty + 1);
+                          onPlusOrder(idx);
                         }}
                         variant={"none"}>
                         <Plus />
                       </Button>
                     </div>
-                    <div>{`$${item?.food?.price}`}</div>
+                    <div>{`$${item?.food?.price * item?.qty}`}</div>
                   </div>
                 </div>
               </div>
             ))}
+          </div>
+          <div className="bg-[#FAFAFA] w-full h-100% rounded-[25px] px-3 mt-5">
+            <div className="pb-[20px] pt-[5px]">Payment info</div>
+
+            <div className="flex justify-between pb-[8px]">
+              <div>Items</div>
+              <div>{calculateTotal() - 1}</div>
+            </div>
+
+            <div className="flex justify-between pb-[20px]">
+              <div className="">Shipping</div>
+              <div>0.99$</div>
+            </div>
+            <div className="border-b-[1px] border-dashed border-[#09090B80] "></div>
+
+            <div className="flex justify-between pt-[20px]">
+              <div>Total</div>
+              <div>${calculateTotal()}</div>
+            </div>
+            <div className="py-[20px]">
+              <Button className="w-full rounded-full bg-[#EF4444]">Checkout</Button>
+            </div>
           </div>
         </PopoverContent>
       </Popover>

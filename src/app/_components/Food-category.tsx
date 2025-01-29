@@ -34,6 +34,15 @@ export const FoodCategory = () => {
     };
     fetchData();
   }, []);
+  // const calculateTotal = (foodOrderItem) => {
+  //   if (!foodOrderItem || foodOrderItem.length === 0) {
+  //     return 0;
+  //   } else {
+  //     foodOrderItem?.reduce((total, orderItem) => {
+  //       return total + orderItem?.qty * orderItem?.food.price;
+  //     });
+  //   }
+  // };
 
   return (
     <div className="bg-[#FFFFFF] w-full h-100% rounded-xl p-4 mt-[80px] mb-[50px]">
