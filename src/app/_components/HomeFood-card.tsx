@@ -7,7 +7,7 @@ import { DialogClose } from "@radix-ui/react-dialog";
 import { Minus, Pencil, Plus, Trash } from "lucide-react";
 import { useEffect, useState } from "react";
 const CLOUDINARY_CLOUD_NAME = "dku0azubr";
-export const HomeFoodCard = ({ itemsId, location }) => {
+export const HomeFoodCard = ({ itemsId, orderLocation }) => {
   const [cardFoodData, setCardFoodData] = useState([]);
   const [qty, setQty] = useState(0);
   const [totalPrice, setTotalPrice] = useState(0);
@@ -109,7 +109,7 @@ export const HomeFoodCard = ({ itemsId, location }) => {
                             <DialogClose asChild>
                               <Button
                                 onClick={() => {
-                                  if (!location) {
+                                  if (!orderLocation) {
                                     alert("Please add location");
                                   }
                                   addFoodOrder(food);

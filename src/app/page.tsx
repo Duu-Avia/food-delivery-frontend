@@ -6,13 +6,14 @@ import { HomeSection } from "./_components/Home-section";
 
 
 export default function HomePage() {
-  const [location, setLocation] = useState("");
+  const [orderLocation, setOrderLocation] = useState("");
+  
   
     
   return (
     <div className="bg-[#404040]">
-      <HomeHeader setLocation={setLocation}/>
-      <HomeSection location={location}/>
+      <HomeHeader orderLocation={orderLocation} setOrderLocation={setOrderLocation}/>
+      <HomeSection orderLocation={orderLocation}/>
       <HomeFooter />
     </div>
   );
