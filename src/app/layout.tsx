@@ -4,6 +4,7 @@ import "./globals.css";
 import { LeftSideBar } from "./_components/Leftside-bar";
 import { HomeHeader } from "./_components/Home-header";
 import { HomeFooter } from "./_components/Home-footer";
+import { ClerkProvider, SignedIn, SignedOut, SignInButton, UserButton } from "@clerk/nextjs";
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -27,7 +28,16 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en">
-      <body>{children}</body>
+      <body>
+        <ClerkProvider>
+          <SignedOut>
+            <div className="flex justify-center bg-[#EF4444] text-[#FFFFFF] text-[14px]  w-[75px] h-[36px] rounded-full">
+              <SignInButton />
+            </div>
+          </SignedOut>
+          <SignedIn>{children}</SignedIn>
+        </ClerkProvider>
+      </body>
     </html>
   );
 }

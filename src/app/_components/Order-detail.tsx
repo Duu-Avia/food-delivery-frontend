@@ -5,10 +5,40 @@ import { Input } from "@/components/ui/input";
 import { Popover, PopoverContent, PopoverTrigger } from "@/components/ui/popover";
 import { Minus, Plus, ShoppingCart, X } from "lucide-react";
 import { useEffect, useState } from "react";
+import { useAuth } from "@clerk/nextjs";
 import { set } from "date-fns";
 export const OrderDetail = () => {
   const [foodOrderItem, setFoodOrderItem] = useState([]);
   const [isOpen, setIsOpen] = useState(false);
+  const { getToken } = useAuth();
+  const onPlusCheckout = async () => {
+    const token = await getToken();
+    console.log(token);
+    if (!token) return;
+
+    try {
+      const response = await fetch(`http://localhost:8000/order`, {
+        method: "POST",
+        headers: {
+          authentication: token ?? "",
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          totalPrice: calculateTotal(),
+          foodOrderItem,
+        }),
+      });
+
+      if (response.ok) {
+        const data = await response.json();
+        console.log("Order placed successfully:", data);
+      } else {
+        console.error("Failed to place order:", response.statusText);
+      }
+    } catch (error) {
+      console.error("Error during checkout:", error);
+    }
+  };
 
   const onMinusOrder = (idx: Number) => {
     const newOrderItems = foodOrderItem.map((orderItem, index) => {
@@ -136,7 +166,9 @@ export const OrderDetail = () => {
               <div>${calculateTotal()}</div>
             </div>
             <div className="py-[20px]">
-              <Button className="w-full rounded-full bg-[#EF4444]">Checkout</Button>
+              <Button onClick={onPlusCheckout} className="w-full rounded-full bg-[#EF4444]">
+                Checkout
+              </Button>
             </div>
           </div>
         </PopoverContent>

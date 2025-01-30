@@ -2,6 +2,7 @@ import { Button } from "@/components/ui/button";
 import { Dialog, DialogContent, DialogDescription, DialogFooter, DialogHeader, DialogTitle, DialogTrigger } from "@/components/ui/dialog";
 import { Label } from "@/components/ui/label";
 import { Select } from "@/components/ui/select";
+import { useAuth } from "@clerk/nextjs";
 import { DialogClose } from "@radix-ui/react-dialog";
 import { Minus, Pencil, Plus, Trash } from "lucide-react";
 import { useEffect, useState } from "react";
@@ -10,10 +11,15 @@ export const HomeFoodCard = ({ itemsId, location }) => {
   const [cardFoodData, setCardFoodData] = useState([]);
   const [qty, setQty] = useState(0);
   const [totalPrice, setTotalPrice] = useState(0);
-
+  const { getToken } = useAuth();
   useEffect(() => {
     const fetchFoods = async () => {
-      const response = await fetch(`http://localhost:8000/dishes/${itemsId}`);
+      const token = await getToken();
+      const response = await fetch(`http://localhost:8000/dishes/${itemsId}`, {
+        headers: {
+          authentication: `${token}`,
+        },
+      });
       const data = await response.json();
       setCardFoodData(data);
     };
