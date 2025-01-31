@@ -9,5 +9,5 @@ export default function AdminHomePage() {
   }
   // const isAdmin = user?.publicMetadata.role === "admin";
 
-  return <div></div>;
+  return <div>hi</div>;
 }
