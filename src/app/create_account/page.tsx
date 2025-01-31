@@ -2,13 +2,7 @@
 import { useState } from "react";
 import { StepOne } from "../_components/Create-step-one";
 import { StepTwo } from "../_components/Create-step-two";
-import {
-  ClerkProvider,
-  SignInButton,
-  SignedIn,
-  SignedOut,
-  UserButton
-} from '@clerk/nextjs'
+import { ClerkProvider, SignInButton, SignedIn, SignedOut, UserButton } from "@clerk/nextjs";
 
 export const MainBody = ({ currentStep, setCurrentStep, onChangeHandler, form }) => {
   if (currentStep === 1) {
@@ -34,7 +28,6 @@ export default function CreateAccountHome() {
   };
   return (
     <div className="flex justify-center items-center gap-10 pt-[20px]">
-    
       <img src="./Frame1321316047.png" alt="" />
     </div>
   );

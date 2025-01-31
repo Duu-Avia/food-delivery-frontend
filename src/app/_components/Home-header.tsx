@@ -1,22 +1,19 @@
 import { Button } from "@/components/ui/button";
 import Link from "next/link";
 import Image from "next/image";
-import {
-  ClerkProvider,
-  SignInButton,
-  SignedIn,
-  SignedOut,
-  UserButton
-} from '@clerk/nextjs'
+import { ClerkProvider, SignInButton, SignedIn, SignedOut, UserButton } from "@clerk/nextjs";
 import { Input } from "@/components/ui/input";
 import { ShoppingCart } from "lucide-react";
 import { OrderDetail } from "./Order-detail";
 
-
-export function HomeHeader({orderLocation, setOrderLocation }) {
-  const locationHandler = (e) => {
+export function HomeHeader({ orderLocation, setOrderLocation }) {
+  export function HomeHeader({ setOrderLocation, orderLocation }) {
+    const locationHandler = (e) => {
+      setOrderLocation(e.target.value);
+    };
     setOrderLocation(e.target.value);
   }
+
   return (
     <div className="flex justify-between items-center w-screen h-100% bg-[#18181B] text-white  py-[10px] px-[70px]">
       <div className="flex">
@@ -34,28 +31,32 @@ export function HomeHeader({orderLocation, setOrderLocation }) {
         </div>
       </div>
       <div className="flex gap-5 ">
+        <div></div>
         <div>
-      
-           
-        </div>
-        <div>
-        <ClerkProvider> 
-      <SignedOut>
-        <div className="flex justify-center bg-[#EF4444] text-[#FFFFFF] text-[14px]  w-[75px] h-[36px] rounded-full">
-        <SignInButton  />
-        </div>
-          </SignedOut>
+          <ClerkProvider>
+            <SignedOut>
+              <div className="flex justify-center bg-[#EF4444] text-[#FFFFFF] text-[14px]  w-[75px] h-[36px] rounded-full">
+                <SignInButton />
+              </div>
+            </SignedOut>
 
-          <SignedIn>
-          <div className="flex gap-5">
-          <Input onChange={locationHandler} placeholder="Add location" className="w-[200px] h-[36px] rounded-full bg-[#FFFFF] border-[1px] border-[#FFFFFF] text-black text-[14px]"/>
-        
-          <OrderDetail orderLocation={orderLocation}/>
-            <UserButton />
-          </div>
-         
-          </SignedIn>
-        
+            <SignedIn>
+              <div className="flex gap-5">
+                <Input onChange={locationHandler} placeholder="Add location" className="w-[200px] h-[36px] rounded-full bg-[#FFFFF] border-[1px] border-[#FFFFFF] text-black text-[14px]" />
+
+                <OrderDetail orderLocation={orderLocation} />
+                <UserButton />
+              </div>
+            </SignedIn>
+
+            <SignedIn>
+              <div className="flex gap-5">
+                <Input onChange={locationHandler} placeholder="Add location" className="w-[200px] h-[36px] rounded-full bg-[#FFFFF] border-[1px] border-[#FFFFFF] text-black text-[14px]" />
+                {/* <Button className="w-[35px] h-[36px] rounded-full bg-[#FFFF] text-[#FFFFFF] text-[14px]"><ShoppingCart className="text-black"/></Button> */}
+                <OrderDetail orderLocation={orderLocation} />
+                <UserButton />
+              </div>
+            </SignedIn>
           </ClerkProvider>
         </div>
       </div>

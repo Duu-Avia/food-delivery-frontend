@@ -7,13 +7,14 @@ import { Minus, Plus, ShoppingCart, X } from "lucide-react";
 import { useEffect, useState } from "react";
 import { useAuth } from "@clerk/nextjs";
 import { set } from "date-fns";
-export const OrderDetail = ({orderLocation}) => {
+export const OrderDetail = ({ orderLocation }) => {
   const [foodOrderItem, setFoodOrderItem] = useState([]);
   const [isOpen, setIsOpen] = useState(false);
   const { getToken } = useAuth();
   const onPlusCheckout = async () => {
     const token = await getToken();
-   
+    console.log(orderLocation);
+    console.log(token);
     if (!token) return;
 
     try {
@@ -26,6 +27,7 @@ export const OrderDetail = ({orderLocation}) => {
         body: JSON.stringify({
           totalPrice: calculateTotal(),
           foodOrderItem,
+          address: orderLocation,
           address: orderLocation,
         }),
       });

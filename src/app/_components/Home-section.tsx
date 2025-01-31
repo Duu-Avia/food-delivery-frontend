@@ -5,7 +5,7 @@ import { useParams } from "next/navigation";
 import { HomeFoodCard } from "./HomeFood-card";
 import { CategoryScroll } from "./Category-scroll";
 
-export const HomeSection = ({orderLocation}) => {
+export const HomeSection = ({ orderLocation }) => {
   const [categories, setCategories] = useState([]);
   useEffect(() => {
     const fetchCategories = async () => {
@@ -24,7 +24,7 @@ export const HomeSection = ({orderLocation}) => {
         <div className="text-[1.9rem] text-[#FFFFFF] font-600">Categories</div>
         <CategoryScroll categoryData={categories} />
       </div>
-      <HomeFoodContainer categoryData={categories} orderLocation={orderLocation}/>
+      <HomeFoodContainer categoryData={categories} orderLocation={orderLocation} />
     </>
   );
 };
