@@ -16,7 +16,7 @@ export const FoodCategory = () => {
   const [foodCategories, setFoodCategories] = useState<foodCategoriesType[]>([]);
   const [inputValue, setInputValue] = useState();
   const addFoodCategory = async () => {
-    const response = await fetch(`http://localhost:8000/admin/food_menu`, {
+    const response = await fetch(`${process.env.NEXT_PUBLIC_BACKEND_URL}/admin/food_menu`, {
       method: "POST",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify({ name: inputValue }),
@@ -27,7 +27,7 @@ export const FoodCategory = () => {
 
   useEffect(() => {
     const fetchData = async () => {
-      const response = await fetch(`http://localhost:8000/food_category`);
+      const response = await fetch(`${process.env.NEXT_PUBLIC_BACKEND_URL}/food_category`);
       const data = await response.json();
       setFoodCategories(data);
     };

@@ -8,7 +8,7 @@ export function useAuthFetchData(path: string) {
   const [data, setData] = useState<foodTypes[]>([]);
   const fetchData = async () => {
     const token = await getToken();
-    const response = await fetch(`http://localhost:8000/${path}`,{
+    const response = await fetch(`${process.env.NEXT_PUBLIC_BACKEND_URL}/${path}`,{
       headers:{
         authentication:`${token}`
       }

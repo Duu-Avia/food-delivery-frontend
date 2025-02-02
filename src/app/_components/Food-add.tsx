@@ -7,12 +7,20 @@ import { DialogClose } from "@radix-ui/react-dialog";
 
 import { Plus } from "lucide-react";
 import { useParams } from "next/navigation";
-import { useEffect, useState } from "react";
+import { ChangeEvent, useEffect, useState } from "react";
 
 const CLOUDINARY_CLOUD_NAME = "dku0azubr";
 
-export const FoodAdd = ({ itemsID }) => {
-  const [foods, setFoods] = useState([]);
+type foodsType = {
+  foodName: string,
+  price: number,
+  image: string,
+  ingredients: string,
+  category: string,
+}
+
+export const FoodAdd = ({ itemsID }:any) => {
+  const [foods, setFoods] = useState<foodsType[]>([]);
   const [foodName, setFoodName] = useState("");
   const [foodPrice, setFoodPrice] = useState("");
   const [ingredients, setIngredients] = useState("");
@@ -43,13 +51,13 @@ export const FoodAdd = ({ itemsID }) => {
     fetchData();
   }, []);
 
-  const nameChangeHandler = (e) => {
+  const nameChangeHandler = (e:ChangeEvent<HTMLInputElement>) => {
     setFoodName(e.target.value);
   };
-  const priceChangeHandler = (e) => {
+  const priceChangeHandler = (e:ChangeEvent<HTMLInputElement>) => {
     setFoodPrice(e.target.value);
   };
-  const ingredientsChangeHandler = (e) => {
+  const ingredientsChangeHandler = (e:ChangeEvent<HTMLInputElement>) => {
     setIngredients(e.target.value);
   };
   const ImageChangeHandler = async (event: React.ChangeEvent<HTMLInputElement>) => {

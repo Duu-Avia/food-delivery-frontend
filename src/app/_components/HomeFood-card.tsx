@@ -6,8 +6,14 @@ import { useAuth } from "@clerk/nextjs";
 import { DialogClose } from "@radix-ui/react-dialog";
 import { Minus, Pencil, Plus, Trash } from "lucide-react";
 import { useEffect, useState } from "react";
+import { HomeHeaderProps } from "./Home-header";
 const CLOUDINARY_CLOUD_NAME = "dku0azubr";
-export const HomeFoodCard = ({ itemsId, orderLocation }) => {
+
+export type HomeFoodCardProps = {
+  itemsId: string;
+  orderLocation: string;
+}
+export const HomeFoodCard = ({ itemsId, orderLocation }:HomeFoodCardProps) => {
   const [cardFoodData, setCardFoodData] = useState([]);
   const [qty, setQty] = useState(0);
   const [totalPrice, setTotalPrice] = useState(0);
@@ -15,7 +21,7 @@ export const HomeFoodCard = ({ itemsId, orderLocation }) => {
   useEffect(() => {
     const fetchFoods = async () => {
       const token = await getToken();
-      const response = await fetch(`http://localhost:8000/dishes/${itemsId}`, {
+      const response = await fetch(`${process.env.NEXT_PUBLIC_BACKEND_URL}/dishes/${itemsId}`, {
         headers: {
           authentication: `${token}`,
         },
@@ -25,10 +31,10 @@ export const HomeFoodCard = ({ itemsId, orderLocation }) => {
     };
     fetchFoods();
   }, []);
-  const addFoodOrder = (food) => {
+  const addFoodOrder = (food:any) => {
     const oldOrderValue = localStorage.getItem("foodOrder");
     const oldOrderValueJson = JSON.parse(oldOrderValue || "[]");
-    const oldFilteredOrder = oldOrderValueJson.find((item) => item.food._id === food._id);
+    const oldFilteredOrder = oldOrderValueJson.find((item:any) => item.food._id === food._id);
     if (oldFilteredOrder) {
       oldFilteredOrder.qty += 1;
     } else {

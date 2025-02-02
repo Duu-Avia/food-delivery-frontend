@@ -1,7 +1,18 @@
 import { useEffect, useState } from "react";
 import { HomeFoodCard } from "./HomeFood-card";
+import { CategoryAdd } from "./Category-add";
+import { foodCategoriesType } from "./Food-category";
+export type categoryDataType = {
+  _id: string,
+  categoryName:string,
 
-export const HomeFoodContainer = ({ categoryData, orderLocation }) => {
+}
+export type homeFoodContainerProps = {
+  categoryData: categoryDataType[],
+  orderLocation: string
+}
+
+export const HomeFoodContainer = ({ categoryData, orderLocation }:homeFoodContainerProps) => {
   return (
     <>
       {categoryData?.map((category) => (

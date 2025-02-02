@@ -7,7 +7,15 @@ import { Minus, Plus, ShoppingCart, X } from "lucide-react";
 import { useEffect, useState } from "react";
 import { useAuth } from "@clerk/nextjs";
 import { set } from "date-fns";
-export const OrderDetail = ({ orderLocation }) => {
+import { PopoverClose } from "@radix-ui/react-popover";
+import { HomeFoodCardProps } from "./HomeFood-card";
+import { HomeHeaderProps } from "./Home-header";
+
+type orderLocationType = {
+  orderLocation : string
+}
+
+export const OrderDetail = ({ orderLocation }:orderLocationType) => {
   const [foodOrderItem, setFoodOrderItem] = useState([]);
   const [isOpen, setIsOpen] = useState(false);
   const { getToken } = useAuth();
@@ -28,13 +36,15 @@ export const OrderDetail = ({ orderLocation }) => {
           totalPrice: calculateTotal(),
           foodOrderItem,
           address: orderLocation,
-          address: orderLocation,
+         
         }),
       });
 
       if (response.ok) {
         const data = await response.json();
         console.log("Order placed successfully:", data);
+        setFoodOrderItem([]);
+        localStorage.removeItem("foodOrder")
       } else {
         console.error("Failed to place order:", response.statusText);
       }
@@ -44,7 +54,7 @@ export const OrderDetail = ({ orderLocation }) => {
   };
 
   const onMinusOrder = (idx: Number) => {
-    const newOrderItems = foodOrderItem.map((orderItem, index) => {
+    const newOrderItems:any = foodOrderItem.map((orderItem:any, index) => {
       if (idx === index && orderItem.qty > 1) {
         return { ...orderItem, qty: orderItem.qty - 1 };
       } else {
@@ -56,7 +66,7 @@ export const OrderDetail = ({ orderLocation }) => {
   };
 
   const onPlusOrder = (idx: Number) => {
-    const newOrderItems = foodOrderItem.map((orderItem, index) => {
+    const newOrderItems:any = foodOrderItem.map((orderItem:any, index) => {
       if (idx === index) {
         return { ...orderItem, qty: orderItem.qty + 1 };
       } else {
@@ -73,7 +83,7 @@ export const OrderDetail = ({ orderLocation }) => {
     localStorage.setItem("foodOrder", JSON.stringify(newDeletedOrderItems));
   };
   const calculateTotal = () => {
-    const totalPrice = foodOrderItem.reduce((total, orderItem) => {
+    const totalPrice = foodOrderItem.reduce((total, orderItem:any) => {
       return total + (orderItem.qty * orderItem.food.price || 0);
     }, 0);
     return totalPrice + 1;
@@ -132,7 +142,7 @@ export const OrderDetail = ({ orderLocation }) => {
                         onClick={() => {
                           onMinusOrder(idx);
                         }}
-                        variant={"none"}>
+                        variant={"ghost"}>
                         <Minus />
                       </Button>
                       <div>{item?.qty}</div>
@@ -140,7 +150,7 @@ export const OrderDetail = ({ orderLocation }) => {
                         onClick={() => {
                           onPlusOrder(idx);
                         }}
-                        variant={"none"}>
+                        variant={"ghost"}>
                         <Plus />
                       </Button>
                     </div>
@@ -169,9 +179,11 @@ export const OrderDetail = ({ orderLocation }) => {
               <div>${calculateTotal()}</div>
             </div>
             <div className="py-[20px]">
+              <PopoverClose asChild>
               <Button onClick={onPlusCheckout} className="w-full rounded-full bg-[#EF4444]">
                 Checkout
               </Button>
+              </PopoverClose>
             </div>
           </div>
         </PopoverContent>

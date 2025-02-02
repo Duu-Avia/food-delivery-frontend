@@ -7,10 +7,27 @@ import { CategoryScroll } from "@/app/_components/Category-scroll";
 import { HomeFoodCard } from "@/app/_components/HomeFood-card";
 import { HomeFooter } from "@/app/_components/Home-footer";
 
+export type HomePropsType = {
+  id: string;
+  
+}
+type categotyType = {
+  _id: string;
+  categoryName: string;
+}
+
+
+type foodType = {
+  _id: string;
+  foodName: string;
+  price: number;
+  image: string;
+};
+
 export default function Home() {
-  const { id } = useParams();
-  const [categories, setCategories] = useState([]);
-  const [foods, setFoods] = useState([]);
+  const { id } = useParams<HomePropsType>();
+  const [categories, setCategories] = useState<categotyType[]>([]);
+  const [foods, setFoods] = useState<foodType[]>([]);
   const pathname = usePathname();
   useEffect(() => {
     const fetchCategories = async () => {
@@ -30,16 +47,18 @@ export default function Home() {
   useEffect(() => {
     window.scrollTo(0, 500);
   }, [pathname]);
+  
+  const orderLocation = ""; // Define orderLocation variable
   console.log("from dynamic page", categories);
   return (
     <>
       <div className="bg-[#404040]">
-        <HomeHeader />
+        <HomeHeader orderLocation={orderLocation} setOrderLocation={(location: string) => {}}/>
         <img className="w-full" src="./homeLogo.png" alt="" />
         <CategoryScroll categoryData={categories} />
-        <div>{categories?.find((category: any) => category._id == id)?.categoryName || " "}</div>
+        <div>{categories?.find((category) => category._id == id)?.categoryName || " "}</div>
 
-        <HomeFoodCard itemsId={id} />
+        <HomeFoodCard itemsId={id} orderLocation={orderLocation} />
         <HomeFooter />
       </div>
     </>

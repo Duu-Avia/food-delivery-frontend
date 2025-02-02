@@ -5,7 +5,7 @@ import { HomeHeader } from "./_components/Home-header";
 import { HomeSection } from "./_components/Home-section";
 
 export default function HomePage() {
-  const [orderLocation, setOrderLocation] = useState("");
+  const [orderLocation, setOrderLocation] = useState<string>("");
 
   return (
     <div className="bg-[#404040]">

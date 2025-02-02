@@ -30,7 +30,7 @@ export function FoodCard({ itemsID, foodCategories, singleCategoryName }: any) {
   useEffect(() => {
     const fetchData = async () => {
       const token = await getToken();
-      const response = await fetch(`http://localhost:8000/dishes/${itemsID}`,{
+      const response = await fetch(`${process.env.NEXT_PUBLIC_BACKEND_URL}/dishes/${itemsID}`,{
         headers:{
           authentication:`${token}`
         }
@@ -42,7 +42,7 @@ export function FoodCard({ itemsID, foodCategories, singleCategoryName }: any) {
   }, []);
 
   const editFood = async (formData: any) => {
-    const response = await fetch(`http://localhost:8000/dishes/${foodId}`, {
+    const response = await fetch(`${process.env.NEXT_PUBLIC_BACKEND_URL}/dishes/${foodId}`, {
       method: "PUT",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify({
@@ -69,7 +69,7 @@ export function FoodCard({ itemsID, foodCategories, singleCategoryName }: any) {
     const data = await response.json();
   };
 
-  const imageUrlHandler = async (event) => {
+  const imageUrlHandler = async (event:any) => {
     if (event.target.files && event.target.files.length > 0) {
       const file = event.target.files[0];
       console.log(event.target.files[0]);
@@ -132,7 +132,7 @@ export function FoodCard({ itemsID, foodCategories, singleCategoryName }: any) {
                         </SelectTrigger>
                         <SelectContent>
                           <SelectGroup>
-                            {foodCategories?.map((categories) => (
+                            {foodCategories?.map((categories:any) => (
                               <SelectItem key={`select-${categories?._id}`} value={categories?._id}>
                                 {categories.categoryName}
                               </SelectItem>

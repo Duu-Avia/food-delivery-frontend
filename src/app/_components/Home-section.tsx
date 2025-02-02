@@ -1,15 +1,17 @@
 "use client";
 import { useEffect, useState } from "react";
 import { HomeFoodContainer } from "./HomeFood-container";
-import { useParams } from "next/navigation";
-import { HomeFoodCard } from "./HomeFood-card";
 import { CategoryScroll } from "./Category-scroll";
 
-export const HomeSection = ({ orderLocation }) => {
+type HomeSectionType = {
+  orderLocation : string
+}
+
+export const HomeSection = ({ orderLocation }:HomeSectionType) => {
   const [categories, setCategories] = useState([]);
   useEffect(() => {
     const fetchCategories = async () => {
-      const response = await fetch("http://localhost:8000/food_category");
+      const response = await fetch(`${process.env.NEXT_PUBLIC_BACKEND_URL}/food_category`);
       const data = await response.json();
       setCategories(data);
     };

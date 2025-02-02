@@ -6,13 +6,17 @@ import { Input } from "@/components/ui/input";
 import { ShoppingCart } from "lucide-react";
 import { OrderDetail } from "./Order-detail";
 
-export function HomeHeader({ orderLocation, setOrderLocation }) {
-  export function HomeHeader({ setOrderLocation, orderLocation }) {
-    const locationHandler = (e) => {
+export type HomeHeaderProps ={
+  orderLocation: string;
+  setOrderLocation: (location: string) => void;
+}
+
+export function HomeHeader({ orderLocation, setOrderLocation }:HomeHeaderProps) {
+
+    const locationHandler = (e:React.ChangeEvent<HTMLInputElement>) => {
       setOrderLocation(e.target.value);
     };
-    setOrderLocation(e.target.value);
-  }
+  
 
   return (
     <div className="flex justify-between items-center w-screen h-100% bg-[#18181B] text-white  py-[10px] px-[70px]">
@@ -49,14 +53,7 @@ export function HomeHeader({ orderLocation, setOrderLocation }) {
               </div>
             </SignedIn>
 
-            <SignedIn>
-              <div className="flex gap-5">
-                <Input onChange={locationHandler} placeholder="Add location" className="w-[200px] h-[36px] rounded-full bg-[#FFFFF] border-[1px] border-[#FFFFFF] text-black text-[14px]" />
-                {/* <Button className="w-[35px] h-[36px] rounded-full bg-[#FFFF] text-[#FFFFFF] text-[14px]"><ShoppingCart className="text-black"/></Button> */}
-                <OrderDetail orderLocation={orderLocation} />
-                <UserButton />
-              </div>
-            </SignedIn>
+          
           </ClerkProvider>
         </div>
       </div>
