@@ -42,9 +42,10 @@ export function FoodCard({ itemsID, foodCategories, singleCategoryName }: any) {
   }, []);
 
   const editFood = async (formData: any) => {
+    const token = await getToken()
     const response = await fetch(`${process.env.NEXT_PUBLIC_BACKEND_URL}/dishes/${foodId}`, {
       method: "PUT",
-      headers: { "Content-Type": "application/json" },
+      headers: { "Content-Type": "application/json", authentication:`${token}` },
       body: JSON.stringify({
         foodName: formData.get("foodName"),
         price: formData.get("price"),
@@ -59,9 +60,10 @@ export function FoodCard({ itemsID, foodCategories, singleCategoryName }: any) {
   };
 
   const deleteFood = async () => {
-    const response = await fetch(`http://localhost:8000/dishes`, {
+    const token = await getToken()
+    const response = await fetch(`${process.env.NEXT_PUBLIC_BACKEND_URL}/dishes`, {
       method: "DELETE",
-      headers: { "Content-Type": "application/json" },
+      headers: { "Content-Type": "application/json", authentication: `${token}` },
       body: JSON.stringify({
         _id: foodId,
       }),

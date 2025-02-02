@@ -3,6 +3,7 @@ import { Button } from "@/components/ui/button";
 import { Dialog, DialogContent, DialogDescription, DialogFooter, DialogHeader, DialogTitle, DialogTrigger } from "@/components/ui/dialog";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
+import { useAuth } from "@clerk/nextjs";
 import { DialogClose } from "@radix-ui/react-dialog";
 
 import { Plus } from "lucide-react";
@@ -25,11 +26,13 @@ export const FoodAdd = ({ itemsID }:any) => {
   const [foodPrice, setFoodPrice] = useState("");
   const [ingredients, setIngredients] = useState("");
   const [foodImage, setFoodImage] = useState("");
+  const {getToken} = useAuth()
 
   const addFoods = async () => {
-    const response = await fetch(`http://localhost:8000/dishes`, {
+    const token = await getToken()
+    const response = await fetch(`${process.env.NEXT_PUBLIC_BACKEND_URL}/dishes`, {
       method: "POST",
-      headers: { "Content-Type": "application/json" },
+      headers: { "Content-Type": "application/json", authentication: `${token}`},
       body: JSON.stringify({
         foodName: foodName,
         price: foodPrice,
@@ -44,7 +47,7 @@ export const FoodAdd = ({ itemsID }:any) => {
   console.log(foodImage);
   useEffect(() => {
     const fetchData = async () => {
-      const response = await fetch(`http://localhost:8000/dishes/${itemsID}`);
+      const response = await fetch(`${process.env.NEXT_PUBLIC_BACKEND_URL}/dishes/${itemsID}`);
       const data = await response.json();
       setFoods(data);
     };

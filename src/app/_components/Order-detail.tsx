@@ -26,7 +26,7 @@ export const OrderDetail = ({ orderLocation }:orderLocationType) => {
     if (!token) return;
 
     try {
-      const response = await fetch(`http://localhost:8000/order`, {
+      const response = await fetch(`${process.env.NEXT_PUBLIC_BACKEND_URL}/order`, {
         method: "POST",
         headers: {
           authentication: token ?? "",

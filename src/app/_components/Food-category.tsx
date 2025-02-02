@@ -7,6 +7,7 @@ import { CategoryAdd } from "./Category-add";
 import { Badge } from "@/components/ui/badge";
 import { useSearchParams } from "next/navigation";
 import Link from "next/link";
+import { useAuth } from "@clerk/nextjs";
 export type foodCategoriesType = {
   _id: number;
   name: string;
@@ -15,10 +16,12 @@ export type foodCategoriesType = {
 export const FoodCategory = () => {
   const [foodCategories, setFoodCategories] = useState<foodCategoriesType[]>([]);
   const [inputValue, setInputValue] = useState();
+  const {getToken} = useAuth()
   const addFoodCategory = async () => {
-    const response = await fetch(`${process.env.NEXT_PUBLIC_BACKEND_URL}/admin/food_menu`, {
+    const token = await getToken()
+    const response = await fetch(`${process.env.NEXT_PUBLIC_BACKEND_URL}/food_category`, {
       method: "POST",
-      headers: { "Content-Type": "application/json" },
+      headers: { "Content-Type": "application/json", authentication: `${token}`},
       body: JSON.stringify({ name: inputValue }),
     });
     const data = await response.json();
