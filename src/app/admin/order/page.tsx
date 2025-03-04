@@ -10,21 +10,6 @@ type Payment = {
   email: string;
 };
 
-export const payments: Payment[] = [
-  {
-    user: "728ed52f",
-    totalPrice: 100,
-    status: "pending",
-    email: "m@example.com",
-  },
-  {
-    user: "489e1d42",
-    totalPrice: 125,
-    status: "processing",
-    email: "example@gmail.com",
-  },
-  // ...
-];
 
 export default function Page() {
   const { getToken } = useAuth();
