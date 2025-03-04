@@ -12,6 +12,7 @@ export default function HomePage() {
       <HomeHeader orderLocation={orderLocation} setOrderLocation={setOrderLocation} />
       <HomeSection orderLocation={orderLocation} />
       <HomeFooter />
+      
     </div>
   );
 }

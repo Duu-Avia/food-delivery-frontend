@@ -31,9 +31,13 @@ export default function RootLayout({
       <body>
         <ClerkProvider>
           <SignedOut>
+            <div className="flex flex-col  items-center pt-[200px]">
+            <div className="font-[600]">Figma дээрээ homepage загвар байхгүй байсан тул заавал login хийж website-руугаа орно уу 😊 <br/><div className="text-center">(Since there was no homepage design in Figma, please log in to access the website. 😊)</div></div>
             <div className="flex justify-center bg-[#EF4444] text-[#FFFFFF] text-[14px]  w-[75px] h-[36px] rounded-full">
               <SignInButton />
             </div>
+            </div>
+         
           </SignedOut>
           <SignedIn>{children}</SignedIn>
         </ClerkProvider>

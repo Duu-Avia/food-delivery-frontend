@@ -26,13 +26,13 @@ export default function FoodPage() {
   useEffect(() => {
     const fetchData = async () => {
       const response = await fetch(
-        `http://localhost:8000/dishes/${id}`
+        `${process.env.NEXT_PUBLIC_BACKEND_URL}/dishes/${id}`
       );
       const data = await response.json();
       setFoods(data);
     };
     const fetchCategory = async () => {
-      const response = await fetch(`http://localhost:8000/food_category`);
+      const response = await fetch(`${process.env.NEXT_PUBLIC_BACKEND_URL}/food_category`);
       const data = await response.json();
       setCategoryData(data);
     };

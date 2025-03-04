@@ -16,8 +16,8 @@ export const HomeFoodContainer = ({ categoryData, orderLocation }:homeFoodContai
   return (
     <>
       {categoryData?.map((category) => (
-        <div key={`user-${category?._id}`} className="">
-          <div className="text-[1.9rem] text-[#FFFF]">{category?.categoryName}</div>
+        <div key={`user-${category?._id}`} className="py-[20px] px-[50px]">
+          <div className="text-[1.9rem] text-[#FFFF] py-[20px]">{category?.categoryName}</div>
           <HomeFoodCard itemsId={category?._id} orderLocation={orderLocation} />
         </div>
       ))}

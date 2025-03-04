@@ -31,12 +31,12 @@ export default function Home() {
   const pathname = usePathname();
   useEffect(() => {
     const fetchCategories = async () => {
-      const response = await fetch("http://localhost:8000/food_category");
+      const response = await fetch(`${process.env.NEXT_PUBLIC_BACKEND_URL}/food_category`);
       const data = await response.json();
       setCategories(data);
     };
     const fetchfoods = async () => {
-      const response = await fetch(`http://localhost:8000/dishes/${id}`);
+      const response = await fetch(`${process.env.NEXT_PUBLIC_BACKEND_URL}/dishes/${id}`);
       const data = await response.json();
       setFoods(data);
     };

@@ -34,7 +34,7 @@ export default function Page() {
     const fetchdata = async () => {
       const token = await getToken();
       if (token) {
-        const response = await fetch(`http://localhost:8000/order`, { headers: { authentication: token } });
+        const response = await fetch(`${process.env.NEXT_PUBLIC_BACKEND_URL}/order`, { headers: { authentication: token } });
         const dat = await response.json();
         setData(dat);
         console.log("datanuud", dat);

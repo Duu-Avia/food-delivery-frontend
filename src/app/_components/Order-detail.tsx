@@ -118,23 +118,25 @@ export const OrderDetail = ({ orderLocation }:orderLocationType) => {
           </div>
 
           <div className="bg-[#FAFAFA] w-full h-100% rounded-[25px] mt-5 px-3">
-            <div>My cart</div>
+            <div className="text-[#09090B] font-[600] text-[20px]">My cart</div>
             {foodOrderItem?.map((item: any, idx: Number) => (
-              <div key={`order-${item?.food?._id}`} className="flex">
+              <div key={`order-${item?.food?._id}`} className="flex gap-2 pt-8">
                 <div>
                   <img className="w-[124px] h-[120px] rounded-xl" src={item?.food.image} />
                 </div>
                 <div>
-                  <div>{item?.food?.foodName}</div>
-                  <div>{item?.food?.ingredients}</div>
+                  <div className="text-[#EF4444] flex justify-between">{item?.food?.foodName}
                   <div>
-                    <Button
+                    <Button className="border-[#EF4444] size-[36px] rounded-full" variant={"outline"}
                       onClick={() => {
                         deleteOrderedFood(idx);
                       }}>
-                      <X />
+                      <X className="text-[#EF4444]" />
                     </Button>
                   </div>
+                  </div>
+                  <div>{item?.food?.ingredients}</div>
+                  
                   <div>{item?.food?.qty}</div>
                   <div className="flex items-center justify-between pr-8">
                     <div className="flex items-center">
